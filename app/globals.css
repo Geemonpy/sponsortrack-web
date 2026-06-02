@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  background-color: #f6f3ec;
+  color: #1a1c1e;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+.fade-in { animation: fade 0.4s ease both; }
+
+.job-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.job-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px -12px rgba(26, 28, 30, 0.25);
+}
+
+/* simple scrollbar for the assistant panel */
+.thin-scroll::-webkit-scrollbar { width: 6px; }
+.thin-scroll::-webkit-scrollbar-thumb { background: rgba(26,28,30,.2); border-radius: 3px; }
