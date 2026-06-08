@@ -27,7 +27,6 @@ export default function JobBoard({
   const [location, setLocation] = useState("");
   const [search, setSearch] = useState("");
 
-  // email capture
   const [email, setEmail] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
 
@@ -54,7 +53,6 @@ export default function JobBoard({
     }
   }, [category, badge, days, location, search]);
 
-  // refetch when filters change (debounced for text inputs)
   useEffect(() => {
     const t = setTimeout(fetchJobs, 350);
     return () => clearTimeout(t);
@@ -81,51 +79,67 @@ export default function JobBoard({
   }
 
   const statItems = [
-    { n: stats.total, l: "Total jobs", c: "" },
-    { n: stats.licensed_sponsor, l: "Licensed sponsors", c: "text-licensed" },
-    { n: stats.today, l: "New today", c: "" },
+    { n: stats.total, l: "Total jobs" },
+    { n: stats.licensed_sponsor, l: "Licensed sponsors" },
+    { n: stats.today, l: "New today" },
   ];
 
-  const displayJobs = badge !== ""
-    ? jobs
-    : includeUnconfirmed
-    ? jobs
-    : jobs.filter((j) => j.badge === "licensed_sponsor" || j.badge === "sponsorship_mentioned");
+  const displayJobs =
+    badge !== ""
+      ? jobs
+      : includeUnconfirmed
+      ? jobs
+      : jobs.filter(
+          (j) => j.badge === "licensed_sponsor" || j.badge === "sponsorship_mentioned"
+        );
 
-  const selectCls =
-    "bg-card border border-ink/15 rounded-lg px-3 py-2 text-sm font-medium";
+  const controlCls =
+    "bg-white border border-v-line rounded-xl px-3.5 py-2 text-[14px] font-medium text-v-ink focus:outline-none focus:border-violet transition-colors";
 
   return (
     <>
-      {/* HERO */}
-      <section className="max-w-5xl mx-auto px-5 pt-10 pb-6">
-        <h1 className="font-display font-extrabold text-4xl sm:text-5xl leading-[1.05] tracking-tight max-w-2xl">
-          UK jobs from <span className="text-accent">licensed visa sponsors.</span>
+      {/* ── HERO ── */}
+      <section className="max-w-5xl mx-auto px-5 pt-[120px] pb-8">
+        <h1 className="font-jakarta font-extrabold text-[clamp(2rem,5vw,3.2rem)] leading-[1.05] tracking-[-0.02em] max-w-2xl text-v-ink">
+          UK jobs from{" "}
+          <span className="text-violet">licensed visa sponsors.</span>
         </h1>
-        <p className="mt-4 text-ink/70 text-lg max-w-xl">
+        <p className="mt-4 text-v-muted text-[17px] max-w-xl leading-relaxed">
           Every listing is checked against the Home Office sponsor register. We remove jobs that
           clearly say sponsorship is unavailable, and label the rest by sponsorship confidence.
         </p>
+
+        {/* Stat cards */}
         <div className="mt-7 grid grid-cols-3 gap-3 max-w-xl">
-          {statItems.map((i) => (
-            <div key={i.l} className="bg-card border border-ink/10 rounded-xl px-4 py-3">
-              <div className={`font-display font-extrabold text-2xl ${i.c}`}>{i.n}</div>
-              <div className="text-xs uppercase tracking-wide text-ink/45 font-semibold">{i.l}</div>
+          {statItems.map((item) => (
+            <div
+              key={item.l}
+              className="bg-white border border-v-line rounded-[18px] px-5 py-4 shadow-[0_14px_44px_rgba(28,20,64,.07)]"
+            >
+              <div className="font-jakarta font-extrabold text-[1.9rem] text-violet leading-none">
+                {item.n}
+              </div>
+              <div className="text-[12px] uppercase tracking-wide text-v-muted font-semibold mt-1">
+                {item.l}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* FILTER BAR */}
-      <section className="max-w-5xl mx-auto px-5 sticky top-0 z-10 bg-parchment/95 backdrop-blur py-4 border-y border-ink/10">
+      {/* ── FILTER BAR ── */}
+      <section className="max-w-5xl mx-auto px-5 sticky top-0 z-10 bg-v-bg/95 backdrop-blur-sm py-4 border-y border-v-line">
         <div className="flex flex-wrap items-center gap-2">
-          <div className="flex gap-1.5 p-1 bg-ink/5 rounded-full">
+          {/* Category tabs */}
+          <div className="flex gap-1.5 p-1 bg-v-line/60 rounded-full">
             {CATS.map((c) => (
               <button
                 key={c.key}
                 onClick={() => setCategory(c.key)}
-                className={`px-3.5 py-1.5 text-sm font-semibold rounded-full transition ${
-                  category === c.key ? "bg-card shadow text-accent" : "text-ink/55"
+                className={`px-3.5 py-1.5 text-[13.5px] font-jakarta font-semibold rounded-full transition-all duration-200 ${
+                  category === c.key
+                    ? "bg-white shadow text-violet"
+                    : "text-v-muted hover:text-v-ink"
                 }`}
               >
                 {c.label}
@@ -135,23 +149,34 @@ export default function JobBoard({
 
           <div className="flex-1" />
 
-          <select className={selectCls} value={badge} onChange={(e) => setBadge(e.target.value)}>
+          {/* Badge filter */}
+          <select
+            className={controlCls}
+            value={badge}
+            onChange={(e) => setBadge(e.target.value)}
+          >
             <option value="">All sponsor-safe jobs</option>
-            <option value="licensed_sponsor">🟡 Licensed sponsor employer</option>
-            <option value="sponsorship_mentioned">🔵 Sponsorship mentioned</option>
+            <option value="licensed_sponsor">Licensed sponsor employer</option>
+            <option value="sponsorship_mentioned">Sponsorship mentioned</option>
           </select>
 
-          <label className="flex items-center gap-1.5 text-sm font-medium text-ink/70 cursor-pointer select-none">
+          {/* Include unconfirmed */}
+          <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
             <input
               type="checkbox"
               checked={includeUnconfirmed}
               onChange={(e) => setIncludeUnconfirmed(e.target.checked)}
-              className="rounded"
+              className="rounded accent-violet"
             />
             Include unconfirmed
           </label>
 
-          <select className={selectCls} value={days} onChange={(e) => setDays(e.target.value)}>
+          {/* Days filter */}
+          <select
+            className={controlCls}
+            value={days}
+            onChange={(e) => setDays(e.target.value)}
+          >
             <option value="">Any time</option>
             <option value="1">Last 24 hours</option>
             <option value="7">Last 7 days</option>
@@ -159,33 +184,41 @@ export default function JobBoard({
             <option value="30">Last 30 days</option>
           </select>
 
+          {/* Location */}
           <input
-            className={`${selectCls} w-32 placeholder-ink/40`}
+            className={`${controlCls} w-32 placeholder:text-v-muted/60`}
             placeholder="Location…"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
+
+          {/* Search */}
           <input
-            className={`${selectCls} w-44 placeholder-ink/40`}
+            className={`${controlCls} w-44 placeholder:text-v-muted/60`}
             placeholder="Title or company…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
         </div>
-        <p className="mt-2 text-xs text-ink/40">
-          Licensed sponsor means the employer appears on the official Home Office sponsor register. It does not guarantee sponsorship for this exact role.
+
+        <p className="mt-2 text-[12px] text-v-muted/60">
+          Licensed sponsor means the employer appears on the official Home Office sponsor register.
+          It does not guarantee sponsorship for this exact role.
         </p>
       </section>
 
-      {/* RESULTS */}
+      {/* ── RESULTS ── */}
       <main className="max-w-5xl mx-auto px-5 py-6">
-        <div className="text-sm text-ink/50 mb-4">
+        <div className="text-[13.5px] text-v-muted mb-4">
           {loading ? "Loading…" : `${displayJobs.length} job${displayJobs.length === 1 ? "" : "s"}`}
         </div>
+
         {displayJobs.length === 0 && !loading ? (
-          <div className="text-center py-20 text-ink/50">
-            <p className="font-display text-2xl text-ink/70">No jobs match those filters.</p>
-            <p className="mt-1">Try widening the time range or clearing the search.</p>
+          <div className="text-center py-20">
+            <p className="font-jakarta font-bold text-[1.5rem] text-v-muted">
+              No jobs match those filters.
+            </p>
+            <p className="mt-2 text-v-muted/70">Try widening the time range or clearing the search.</p>
           </div>
         ) : (
           <div className="grid gap-3">
@@ -196,39 +229,44 @@ export default function JobBoard({
         )}
       </main>
 
-      {/* EMAIL CAPTURE */}
-      <section id="alerts" className="bg-accent text-parchment mt-10">
-        <div className="max-w-5xl mx-auto px-5 py-14 grid sm:grid-cols-2 gap-8 items-center">
-          <div>
-            <h2 className="font-display font-extrabold text-3xl leading-tight">
+      {/* ── EMAIL CAPTURE ── */}
+      <section id="alerts" className="max-w-5xl mx-auto px-5 mt-10 mb-16">
+        <div className="relative rounded-[30px] overflow-hidden bg-gradient-to-br from-violet to-violet-2 px-10 py-16 grid sm:grid-cols-2 gap-8 items-center">
+          <div
+            className="absolute w-[300px] h-[300px] rounded-full top-[-140px] right-[-100px] pointer-events-none"
+            style={{ background: "rgba(255,255,255,0.12)", filter: "blur(10px)" }}
+          />
+          <div className="relative">
+            <h2 className="font-jakarta font-extrabold text-[1.9rem] leading-tight text-white">
               Get daily visa-sponsor job alerts
             </h2>
-            <p className="mt-3 text-parchment/80">
+            <p className="mt-3 text-white/80">
               New sponsor-verified roles in your inbox every morning. Free, no spam.
             </p>
           </div>
-          <div>
+          <div className="relative">
             <div className="flex gap-2">
               <input
                 type="email"
                 placeholder="you@email.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-lg px-4 py-3 text-ink placeholder-ink/40 border-0"
+                className="flex-1 rounded-xl px-4 py-3 text-v-ink placeholder:text-v-muted/60 bg-white border-0 outline-none font-medium"
               />
               <button
                 onClick={subscribe}
-                className="bg-ink text-parchment font-semibold px-5 py-3 rounded-lg hover:bg-ink/85 transition"
+                className="bg-white text-violet font-jakarta font-bold px-5 py-3 rounded-xl hover:bg-violet-tint transition-colors shrink-0"
               >
                 Subscribe
               </button>
             </div>
-            <p className="mt-2 text-sm text-parchment/90 h-5">{alertMsg}</p>
+            <p className="mt-2 text-[13px] text-white/80 h-5">{alertMsg}</p>
           </div>
         </div>
       </section>
 
-      <footer className="max-w-5xl mx-auto px-5 py-8 text-center text-sm text-ink/40">
+      {/* ── FOOTER ── */}
+      <footer className="max-w-5xl mx-auto px-5 py-8 border-t border-v-line text-center text-[13px] text-v-muted/60">
         Sponsor data: Home Office register of licensed sponsors. Job data: Adzuna. Badges are
         guidance, not a guarantee — always confirm with the employer.
       </footer>

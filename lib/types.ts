@@ -33,4 +33,5 @@ export interface JobFilters {
   days?: number;
   search?: string;
   limit?: number;
+  sourceType?: "main" | "test";
 }

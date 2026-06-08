@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
     search: sp.get("search") || undefined,
     days: daysRaw ? Number(daysRaw) : undefined,
     limit: 200,
+    sourceType: "main",
   });
   return NextResponse.json({ count: jobs.length, jobs });
 }

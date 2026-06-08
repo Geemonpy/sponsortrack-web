@@ -2,6 +2,8 @@ import "server-only";
 import { supabase } from "./supabaseServer";
 import type { Job, JobFilters, Stats } from "./types";
 
+export const MAIN_SOURCES = ["Adzuna", "Active Jobs DB"] as const;
+
 export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
   try {
     let q = supabase.from("jobs").select("*");
@@ -26,7 +28,17 @@ export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
       console.error("getJobs error:", error.message);
       return [];
     }
-    return (data ?? []) as Job[];
+    let result = (data ?? []) as Job[];
+    if (filters.sourceType === "main") {
+      result = result.filter(
+        (j) => j.source === null || (MAIN_SOURCES as readonly string[]).includes(j.source)
+      );
+    } else if (filters.sourceType === "test") {
+      result = result.filter(
+        (j) => j.source !== null && !(MAIN_SOURCES as readonly string[]).includes(j.source)
+      );
+    }
+    return result;
   } catch (e) {
     console.error("getJobs failed:", e);
     return [];

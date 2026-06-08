@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes spinGlow {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+@keyframes spinRing {
+  to { transform: translateY(-50%) rotate(360deg); }
+}
+
 :root {
   color-scheme: light;
 }

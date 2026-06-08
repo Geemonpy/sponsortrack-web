@@ -1,10 +1,22 @@
 import Link from "next/link";
 import type { Job, Badge } from "@/lib/types";
 
-const BADGES: Record<Badge, { label: string; cls: string; dot: string; icon: string }> = {
-  sponsor_confirmed: { label: "Sponsor confirmed", cls: "text-confirmed bg-confirmed/10", dot: "bg-confirmed", icon: "✅" },
-  licensed_sponsor: { label: "Licensed sponsor", cls: "text-licensed bg-licensed/10", dot: "bg-licensed", icon: "🟡" },
-  sponsorship_mentioned: { label: "Sponsorship mentioned", cls: "text-mentioned bg-mentioned/10", dot: "bg-mentioned", icon: "🔵" },
+const BADGES: Record<Badge, { label: string; pillCls: string; dotCls: string }> = {
+  sponsor_confirmed: {
+    label: "Sponsor confirmed",
+    pillCls: "bg-v-green-soft text-v-green",
+    dotCls: "bg-v-green",
+  },
+  licensed_sponsor: {
+    label: "Licensed sponsor",
+    pillCls: "bg-violet-soft text-violet",
+    dotCls: "bg-violet",
+  },
+  sponsorship_mentioned: {
+    label: "Sponsorship mentioned",
+    pillCls: "bg-v-amber-soft text-v-amber",
+    dotCls: "bg-v-amber",
+  },
 };
 
 function timeAgo(dateStr: string | null): string {
@@ -20,31 +32,40 @@ function timeAgo(dateStr: string | null): string {
 export default function JobCard({ job }: { job: Job }) {
   const b = BADGES[job.badge] ?? BADGES.sponsorship_mentioned;
   return (
-    <article className="job-card fade-in bg-card border border-ink/10 rounded-xl p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+    <article className="bg-white border border-v-line rounded-[18px] p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[0_14px_44px_rgba(28,20,64,.07)] hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(28,20,64,.13)] transition-all duration-200">
       <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-2 mb-1.5">
-          <span className={`inline-block w-2.5 h-2.5 rounded-full ${b.dot}`} />
-          <span className={`text-xs font-bold uppercase tracking-wide px-2 py-0.5 rounded ${b.cls}`}>
-            {b.icon} {b.label}
+        {/* Badge pill */}
+        <div className="mb-2.5">
+          <span className={`inline-flex items-center gap-2 font-jakarta font-bold text-[11px] px-[11px] py-[5px] rounded-full ${b.pillCls}`}>
+            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${b.dotCls}`} />
+            {b.label.toUpperCase()}
           </span>
         </div>
-        <h3 className="font-display font-semibold text-xl leading-snug truncate">
-          <Link href={`/jobs/${job.id}`} className="hover:underline underline-offset-4">
+
+        {/* Title */}
+        <h3 className="font-jakarta font-bold text-[1.1rem] leading-snug truncate text-v-ink">
+          <Link href={`/jobs/${job.id}`} className="hover:text-violet transition-colors">
             {job.title}
           </Link>
         </h3>
-        <p className="text-ink/70 font-medium truncate">{job.company}</p>
-        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink/55">
+
+        {/* Company */}
+        <p className="text-v-muted font-medium truncate mt-0.5">{job.company}</p>
+
+        {/* Meta */}
+        <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[13.5px] text-v-muted">
           {job.location && <span>📍 {job.location}</span>}
           <span>💷 {job.salary || "Not specified"}</span>
           <span>🕑 {timeAgo(job.posted_date)}</span>
-          <span className="text-ink/35">via {job.source || "Adzuna"}</span>
+          <span className="opacity-50">via {job.source || "Adzuna"}</span>
         </div>
       </div>
+
+      {/* Actions */}
       <div className="shrink-0 flex sm:flex-col gap-2">
         <Link
           href={`/jobs/${job.id}`}
-          className="text-center border border-ink/15 text-ink font-semibold px-5 py-2.5 rounded-lg hover:bg-ink/5 transition"
+          className="text-center border border-v-line text-v-ink font-jakarta font-semibold text-[14px] px-5 py-2.5 rounded-xl hover:border-violet hover:text-violet transition-colors"
         >
           Details
         </Link>
@@ -53,7 +74,7 @@ export default function JobCard({ job }: { job: Job }) {
             href={job.apply_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-center bg-accent text-parchment font-semibold px-5 py-2.5 rounded-lg hover:bg-accent/90 transition"
+            className="text-center bg-violet text-white font-jakarta font-bold text-[14px] px-5 py-2.5 rounded-xl shadow-[0_10px_24px_rgba(91,67,232,0.25)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
           >
             Apply
           </a>
