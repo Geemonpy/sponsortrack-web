@@ -29,8 +29,8 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsortrack.vercel
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "SponsorTrack — UK Visa Sponsor Jobs",
-    template: "%s | SponsorTrack",
+    default: "Sponsor UK — UK Visa Sponsor Jobs",
+    template: "%s | Sponsor UK",
   },
   description:
     "Find UK jobs from employers on the Home Office register of licensed visa sponsors. IT and care roles, checked against the official sponsor register.",
@@ -42,11 +42,11 @@ export const metadata: Metadata = {
     "tier 2 sponsorship jobs",
   ],
   openGraph: {
-    title: "SponsorTrack — UK Visa Sponsor Jobs",
+    title: "Sponsor UK — UK Visa Sponsor Jobs",
     description:
       "UK jobs from employers on the Home Office licensed sponsor register.",
     url: siteUrl,
-    siteName: "SponsorTrack",
+    siteName: "Sponsor UK",
     type: "website",
   },
   robots: { index: true, follow: true },

@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-const MODEL = process.env.ASSISTANT_MODEL || "claude-haiku-4-5";
+const MODEL = process.env.ASSISTANT_MODEL || "claude-haiku-4-5-20251001";
 
 interface ChatMessage {
   role: "user" | "assistant";
@@ -19,7 +19,7 @@ interface JobContext {
 }
 
 function systemPrompt(job?: JobContext): string {
-  let base = `You are the SponsorTrack assistant, helping people who need UK visa sponsorship to find and apply for jobs.
+  let base = `You are the Sponsor UK assistant, helping people who need UK visa sponsorship to find and apply for jobs.
 
 You can help with:
 - Explaining UK work visa routes in plain English (Skilled Worker visa, Health and Care Worker visa, and what a Certificate of Sponsorship is).

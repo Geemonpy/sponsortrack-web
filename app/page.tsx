@@ -6,7 +6,7 @@ import Reveal from "@/components/landing/Reveal";
 import Link from "next/link";
 
 export const metadata = {
-  title: "SponsorTrack — Find UK jobs that sponsor your visa",
+  title: "Sponsor UK — Find UK jobs that sponsor your visa",
   description:
     "Find UK jobs from employers on the Home Office register of licensed visa sponsors. IT and care roles, checked against the official sponsor register.",
 };
@@ -383,12 +383,12 @@ export default function HomePage() {
       <footer className="max-w-[1240px] mx-auto px-7 pt-[70px] pb-10">
         <div className="grid grid-cols-[1.6fr_1fr_1fr_1fr] gap-7 mb-10 max-[780px]:grid-cols-2">
           <div>
-            <div className="flex items-center gap-2.5 font-jakarta font-extrabold text-[21px]">
+            <Link href="/" className="flex items-center gap-2.5 font-jakarta font-extrabold text-[21px] text-v-ink no-underline">
               <span className="w-[34px] h-[34px] rounded-[10px] bg-gradient-to-br from-violet to-violet-2 flex items-center justify-center text-white text-[18px] shadow-[0_6px_16px_rgba(91,67,232,0.4)]">
                 S
               </span>
-              Sponsor<span className="text-violet">Track</span>
-            </div>
+              Sponsor<span className="text-violet">UK</span>
+            </Link>
             <p className="text-v-muted text-[15px] mt-3.5 max-w-[280px]">
               The UK visa-sponsorship job board that only shows employers who can actually sponsor you.
             </p>
@@ -413,7 +413,7 @@ export default function HomePage() {
           </div>
         </div>
         <div className="border-t border-v-line pt-6 flex justify-between text-v-muted text-[14px] flex-wrap gap-2.5">
-          <span>© 2026 SponsorTrack · Built in London</span>
+          <span>© 2026 Sponsor UK · Built in London</span>
           <span>Verified against the Home Office Register of Licensed Sponsors</span>
         </div>
       </footer>

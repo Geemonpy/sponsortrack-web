@@ -3,13 +3,26 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getJob } from "@/lib/data";
 import type { Badge } from "@/lib/types";
+import Nav from "@/components/landing/Nav";
 
 export const revalidate = 300;
 
-const BADGE_TEXT: Record<Badge, string> = {
-  sponsor_confirmed: "Sponsor confirmed",
-  licensed_sponsor: "Licensed sponsor",
-  sponsorship_mentioned: "Sponsorship mentioned",
+const BADGE_META: Record<Badge, { label: string; pillClass: string; dotClass: string }> = {
+  sponsor_confirmed: {
+    label: "Sponsor confirmed",
+    pillClass: "bg-v-green-soft text-v-green",
+    dotClass: "bg-v-green",
+  },
+  licensed_sponsor: {
+    label: "Licensed sponsor",
+    pillClass: "bg-violet-soft text-violet",
+    dotClass: "bg-violet",
+  },
+  sponsorship_mentioned: {
+    label: "Sponsorship mentioned",
+    pillClass: "bg-v-amber-soft text-v-amber",
+    dotClass: "bg-v-amber",
+  },
 };
 
 export async function generateMetadata({
@@ -22,7 +35,7 @@ export async function generateMetadata({
   const title = `${job.title} at ${job.company}`;
   const desc = `${job.title} at ${job.company}${
     job.location ? ` in ${job.location}` : ""
-  } — ${BADGE_TEXT[job.badge]}. UK visa sponsorship job on SponsorTrack.`;
+  } — ${BADGE_META[job.badge].label}. UK visa sponsorship job on Sponsor UK.`;
   return {
     title,
     description: desc,
@@ -35,67 +48,84 @@ export default async function JobPage({ params }: { params: { id: string } }) {
   const job = await getJob(params.id);
   if (!job) notFound();
 
-  const badgeText = BADGE_TEXT[job.badge];
+  const badge = BADGE_META[job.badge];
 
   return (
-    <div>
-      <header className="border-b border-ink/10">
-        <div className="max-w-3xl mx-auto px-5 py-5">
-          <Link href="/" className="font-display font-extrabold text-xl tracking-tight">
-            ← SponsorTrack
-          </Link>
-        </div>
-      </header>
+    <div className="min-h-screen bg-v-bg text-v-ink font-sans">
+      <Nav />
 
-      <article className="max-w-3xl mx-auto px-5 py-10">
-        <div
-          className={`inline-block text-xs font-bold uppercase tracking-wide px-2 py-1 rounded mb-4 ${
-            job.badge === "sponsor_confirmed"
-              ? "text-confirmed bg-confirmed/10"
-              : job.badge === "licensed_sponsor"
-              ? "text-licensed bg-licensed/10"
-              : "text-mentioned bg-mentioned/10"
-          }`}
+      <div className="max-w-3xl mx-auto px-5 pt-[110px] pb-16">
+        {/* Back link */}
+        <Link
+          href="/jobs"
+          className="inline-flex items-center gap-1.5 text-[14px] font-medium text-v-muted hover:text-v-ink transition-colors mb-8"
         >
-          {badgeText}
-        </div>
+          ← Back to jobs
+        </Link>
 
-        <h1 className="font-display font-extrabold text-3xl sm:text-4xl leading-tight">
-          {job.title}
-        </h1>
-        <p className="mt-2 text-lg text-ink/70 font-medium">{job.company}</p>
-
-        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-ink/60">
-          {job.location && <span>📍 {job.location}</span>}
-          <span>💷 {job.salary || "Not specified"}</span>
-          {job.posted_date && <span>🗓 Posted {job.posted_date}</span>}
-          <span className="text-ink/40">via {job.source || "Adzuna"}</span>
-        </div>
-
-        {job.apply_url && (
-          <a
-            href={job.apply_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block mt-6 bg-accent text-parchment font-semibold px-6 py-3 rounded-lg hover:bg-accent/90 transition"
-          >
-            Apply on {job.source || "Adzuna"} →
-          </a>
-        )}
-
-        {job.description && (
-          <div className="mt-8 prose prose-sm max-w-none text-ink/80 whitespace-pre-line leading-relaxed">
-            {job.description}
+        {/* Main card */}
+        <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8 sm:p-10">
+          {/* Badge */}
+          <div className={`inline-flex items-center gap-2 font-jakarta font-bold text-[12px] px-[13px] py-[7px] rounded-full mb-6 ${badge.pillClass}`}>
+            <span className={`w-2 h-2 rounded-full ${badge.dotClass}`} />
+            {badge.label.toUpperCase()}
           </div>
-        )}
 
-        <div className="mt-10 p-4 bg-card border border-ink/10 rounded-xl text-sm text-ink/60">
-          <strong className="text-ink/80">A note on sponsorship:</strong> a “{badgeText.toLowerCase()}”
-          label reflects whether {job.company} appears on the Home Office register and whether the
-          listing mentions sponsorship. It is guidance, not a guarantee — always confirm directly
-          with the employer before applying or relocating.
+          {/* Title + company */}
+          <h1 className="font-jakarta font-extrabold tracking-[-0.02em] leading-tight text-[clamp(1.8rem,4vw,2.6rem)] text-v-ink">
+            {job.title}
+          </h1>
+          <p className="mt-2 text-[18px] font-semibold text-v-muted">{job.company}</p>
+
+          {/* Meta row */}
+          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[15px] text-v-muted">
+            {job.location && (
+              <span className="flex items-center gap-1.5">
+                <span className="text-violet">📍</span> {job.location}
+              </span>
+            )}
+            <span className="flex items-center gap-1.5">
+              <span className="text-violet">💷</span> {job.salary || "Not specified"}
+            </span>
+            {job.posted_date && (
+              <span className="flex items-center gap-1.5">
+                <span className="text-violet">🗓</span> Posted {job.posted_date}
+              </span>
+            )}
+            <span className="text-v-muted/60">via {job.source || "Adzuna"}</span>
+          </div>
+
+          {/* Apply button */}
+          {job.apply_url && (
+            <a
+              href={job.apply_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-8 font-jakarta font-bold text-[15px] px-[22px] py-[12px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Apply on {job.source || "Adzuna"} →
+            </a>
+          )}
+
+          {/* Divider */}
+          {job.description && <div className="border-t border-v-line my-8" />}
+
+          {/* Description */}
+          {job.description && (
+            <div className="text-[15.5px] leading-[1.75] text-v-ink/80 whitespace-pre-line">
+              {job.description}
+            </div>
+          )}
         </div>
-      </article>
+
+        {/* Sponsorship note */}
+        <div className="mt-5 bg-violet-tint border border-violet-soft rounded-[16px] p-5 text-[14px] text-v-muted">
+          <strong className="text-v-ink font-semibold">A note on sponsorship:</strong>{" "}
+          a &ldquo;{badge.label.toLowerCase()}&rdquo; label reflects whether {job.company} appears
+          on the Home Office register and whether the listing mentions sponsorship. It is guidance,
+          not a guarantee — always confirm directly with the employer before applying or relocating.
+        </div>
+      </div>
     </div>
   );
 }
