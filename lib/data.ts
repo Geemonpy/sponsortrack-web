@@ -53,12 +53,15 @@ export async function getJob(id: string): Promise<Job | null> {
       .eq("id", id)
       .maybeSingle();
     if (error) {
-      console.error("getJob error:", error.message);
+      console.error(`getJob error for id=${id}:`, error.message);
       return null;
+    }
+    if (!data) {
+      console.warn(`getJob: no row found for id=${id}`);
     }
     return (data as Job) ?? null;
   } catch (e) {
-    console.error("getJob failed:", e);
+    console.error(`getJob failed for id=${id}:`, e);
     return null;
   }
 }
