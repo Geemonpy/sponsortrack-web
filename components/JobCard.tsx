@@ -57,7 +57,6 @@ export default function JobCard({ job }: { job: Job }) {
           {job.location && <span>📍 {job.location}</span>}
           <span>💷 {job.salary || "Not specified"}</span>
           <span>🕑 {timeAgo(job.posted_date)}</span>
-          <span className="opacity-50">via {job.source || "Adzuna"}</span>
         </div>
       </div>
 

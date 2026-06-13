@@ -1,9 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import type { User } from "@supabase/supabase-js";
+import { supabaseBrowser } from "@/lib/supabaseClient";
 
 export default function Nav() {
+  const router = useRouter();
   const [scrolled, setScrolled] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -11,8 +16,23 @@ export default function Nav() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    supabaseBrowser.auth.getUser().then(({ data }) => setUser(data.user));
+    const { data: { subscription } } = supabaseBrowser.auth.onAuthStateChange((_, session) => {
+      setUser(session?.user ?? null);
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
   function openAssistant() {
     window.dispatchEvent(new CustomEvent("open-assistant"));
+  }
+
+  async function signOut() {
+    await supabaseBrowser.auth.signOut();
+    setUser(null);
+    router.push("/");
+    router.refresh();
   }
 
   return (
@@ -41,11 +61,37 @@ export default function Nav() {
         >
           <span className="text-violet">✦</span> Ask AI
         </button>
+
+        {/* Auth */}
+        {user ? (
+          <div className="flex items-center gap-3">
+            <div
+              title={user.email ?? ""}
+              className="w-8 h-8 rounded-full bg-gradient-to-br from-violet to-violet-2 text-white flex items-center justify-center font-jakarta font-bold text-[13px] shadow-[0_4px_10px_rgba(91,67,232,0.3)]"
+            >
+              {(user.email ?? "?")[0].toUpperCase()}
+            </div>
+            <button
+              onClick={signOut}
+              className="hidden sm:block text-[14px] text-v-muted font-medium hover:text-v-ink transition-colors"
+            >
+              Sign out
+            </button>
+          </div>
+        ) : (
+          <Link
+            href="/login"
+            className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors"
+          >
+            Sign in
+          </Link>
+        )}
+
         <Link
           href="/jobs"
           className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2"
         >
-          Browse sponsored jobs
+          Browse jobs
         </Link>
       </div>
     </nav>

@@ -398,6 +398,7 @@ export default function HomePage() {
             <Link href="/jobs" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Browse jobs</Link>
             <a href="#how" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">How it works</a>
             <a href="#calc" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Salary check</a>
+            <Link href="/contact" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Contact</Link>
           </div>
           <div>
             <h5 className="font-jakarta font-bold text-[14px] mb-3.5">Sectors</h5>

@@ -92,7 +92,6 @@ export default async function JobPage({ params }: { params: { id: string } }) {
                 <span className="text-violet">🗓</span> Posted {job.posted_date}
               </span>
             )}
-            <span className="text-v-muted/60">via {job.source || "Adzuna"}</span>
           </div>
 
           {/* Apply button */}
@@ -103,7 +102,7 @@ export default async function JobPage({ params }: { params: { id: string } }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 mt-8 font-jakarta font-bold text-[15px] px-[22px] py-[12px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
             >
-              Apply on {job.source || "Adzuna"} →
+              Apply now →
             </a>
           )}
 
