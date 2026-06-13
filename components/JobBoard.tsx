@@ -14,18 +14,22 @@ const CATS = [
 export default function JobBoard({
   initialJobs,
   stats,
+  initialCategory = "",
+  initialSearch = "",
 }: {
   initialJobs: Job[];
   stats: Stats;
+  initialCategory?: string;
+  initialSearch?: string;
 }) {
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [loading, setLoading] = useState(false);
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(initialCategory);
   const [badge, setBadge] = useState("");
   const [includeUnconfirmed, setIncludeUnconfirmed] = useState(false);
   const [days, setDays] = useState("");
   const [location, setLocation] = useState("");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
 
   const [email, setEmail] = useState("");
   const [alertMsg, setAlertMsg] = useState("");

@@ -9,16 +9,34 @@ export const metadata = {
   description: "Find UK jobs from employers on the Home Office register of licensed visa sponsors.",
 };
 
-export default async function JobsPage() {
+export default async function JobsPage({
+  searchParams,
+}: {
+  searchParams: { category?: string; search?: string };
+}) {
+  const initialCategory = searchParams.category ?? "";
+  const initialSearch = searchParams.search ?? "";
+
   const [jobs, stats] = await Promise.all([
-    getJobs({ limit: 200, sourceType: "main" }),
+    getJobs({
+      limit: 200,
+      sourceType: "main",
+      // Pre-filter server-side so the initial render already shows the right jobs
+      category: initialCategory && initialCategory !== "graduate" ? initialCategory : undefined,
+      search: initialSearch || undefined,
+    }),
     getStats(),
   ]);
 
   return (
     <div className="min-h-screen bg-v-bg">
       <Nav />
-      <JobBoard initialJobs={jobs} stats={stats} />
+      <JobBoard
+        initialJobs={jobs}
+        stats={stats}
+        initialCategory={initialCategory}
+        initialSearch={initialSearch}
+      />
     </div>
   );
 }

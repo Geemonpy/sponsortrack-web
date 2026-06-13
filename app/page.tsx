@@ -15,6 +15,7 @@ const sectors = [
   {
     name: "Healthcare",
     count: "320+ jobs",
+    href: "/jobs?category=care",
     bg: "#DCFCEF",
     color: "#10B981",
     icon: (
@@ -26,6 +27,7 @@ const sectors = [
   {
     name: "Social Care",
     count: "180+ jobs",
+    href: "/jobs?category=care",
     bg: "#EEEBFE",
     color: "#5B43E8",
     icon: (
@@ -38,6 +40,7 @@ const sectors = [
   {
     name: "Technology",
     count: "290+ jobs",
+    href: "/jobs?category=IT",
     bg: "#E4F1FF",
     color: "#2E90FA",
     icon: (
@@ -49,6 +52,7 @@ const sectors = [
   {
     name: "Business",
     count: "140+ jobs",
+    href: "/jobs?search=business",
     bg: "#FEF3DA",
     color: "#F59E0B",
     icon: (
@@ -60,6 +64,7 @@ const sectors = [
   {
     name: "Finance",
     count: "90+ jobs",
+    href: "/jobs?search=finance",
     bg: "#DCFCEF",
     color: "#10B981",
     icon: (
@@ -72,6 +77,7 @@ const sectors = [
   {
     name: "Explore all",
     count: "View sectors",
+    href: "/jobs",
     bg: "#EEEBFE",
     color: "#5B43E8",
     icon: (
@@ -241,7 +247,7 @@ export default function HomePage() {
           {sectors.map((s, i) => (
             <Reveal key={s.name} delay={i * 0.06}>
               <Link
-                href="/jobs"
+                href={s.href}
                 className="group block bg-white border border-v-line rounded-[18px] p-[22px] hover:-translate-y-1.5 hover:shadow-[0_26px_70px_rgba(28,20,64,.13)] hover:border-transparent transition-all duration-300 cursor-pointer"
               >
                 <div

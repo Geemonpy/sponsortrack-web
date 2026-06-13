@@ -44,6 +44,15 @@ export async function generateMetadata({
   };
 }
 
+function MetaRow({ icon, children }: { icon: string; children: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-3 py-3 border-b border-v-line last:border-0">
+      <span className="text-[18px] mt-0.5 shrink-0">{icon}</span>
+      <span className="text-[15px] text-v-ink">{children}</span>
+    </div>
+  );
+}
+
 export default async function JobPage({ params }: { params: { id: string } }) {
   const job = await getJob(params.id);
   if (!job) notFound();
@@ -54,7 +63,7 @@ export default async function JobPage({ params }: { params: { id: string } }) {
     <div className="min-h-screen bg-v-bg text-v-ink font-sans">
       <Nav />
 
-      <div className="max-w-3xl mx-auto px-5 pt-[110px] pb-16">
+      <div className="max-w-[1000px] mx-auto px-5 pt-[110px] pb-20">
         {/* Back link */}
         <Link
           href="/jobs"
@@ -63,66 +72,97 @@ export default async function JobPage({ params }: { params: { id: string } }) {
           ← Back to jobs
         </Link>
 
-        {/* Main card */}
-        <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8 sm:p-10">
-          {/* Badge */}
-          <div className={`inline-flex items-center gap-2 font-jakarta font-bold text-[12px] px-[13px] py-[7px] rounded-full mb-6 ${badge.pillClass}`}>
-            <span className={`w-2 h-2 rounded-full ${badge.dotClass}`} />
-            {badge.label.toUpperCase()}
-          </div>
+        {/* Two-column grid: main | sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
 
-          {/* Title + company */}
-          <h1 className="font-jakarta font-extrabold tracking-[-0.02em] leading-tight text-[clamp(1.8rem,4vw,2.6rem)] text-v-ink">
-            {job.title}
-          </h1>
-          <p className="mt-2 text-[18px] font-semibold text-v-muted">{job.company}</p>
+          {/* ── MAIN COLUMN ── */}
+          <div>
+            <h1 className="font-jakarta font-extrabold tracking-[-0.025em] leading-[1.05] text-[clamp(2rem,5vw,3rem)] text-v-ink">
+              {job.title}
+            </h1>
+            <p className="mt-3 text-[20px] font-semibold text-v-muted">{job.company}</p>
 
-          {/* Meta row */}
-          <div className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-[15px] text-v-muted">
-            {job.location && (
-              <span className="flex items-center gap-1.5">
-                <span className="text-violet">📍</span> {job.location}
-              </span>
-            )}
-            <span className="flex items-center gap-1.5">
-              <span className="text-violet">💷</span> {job.salary || "Not specified"}
-            </span>
-            {job.posted_date && (
-              <span className="flex items-center gap-1.5">
-                <span className="text-violet">🗓</span> Posted {job.posted_date}
-              </span>
-            )}
-          </div>
-
-          {/* Apply button */}
-          {job.apply_url && (
-            <a
-              href={job.apply_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 mt-8 font-jakarta font-bold text-[15px] px-[22px] py-[12px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
-            >
-              Apply now →
-            </a>
-          )}
-
-          {/* Divider */}
-          {job.description && <div className="border-t border-v-line my-8" />}
-
-          {/* Description */}
-          {job.description && (
-            <div className="text-[15.5px] leading-[1.75] text-v-ink/80 whitespace-pre-line">
-              {job.description}
+            {/* Inline meta row on mobile only */}
+            <div className="lg:hidden mt-5 flex flex-wrap gap-x-5 gap-y-2 text-[15px] text-v-muted pb-6 border-b border-v-line">
+              {job.location && <span>📍 {job.location}</span>}
+              <span>💷 {job.salary || "Not specified"}</span>
+              {job.posted_date && <span>🗓 Posted {job.posted_date}</span>}
             </div>
-          )}
-        </div>
 
-        {/* Sponsorship note */}
-        <div className="mt-5 bg-violet-tint border border-violet-soft rounded-[16px] p-5 text-[14px] text-v-muted">
-          <strong className="text-v-ink font-semibold">A note on sponsorship:</strong>{" "}
-          a &ldquo;{badge.label.toLowerCase()}&rdquo; label reflects whether {job.company} appears
-          on the Home Office register and whether the listing mentions sponsorship. It is guidance,
-          not a guarantee — always confirm directly with the employer before applying or relocating.
+            {/* Apply button on mobile only */}
+            {job.apply_url && (
+              <a
+                href={job.apply_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lg:hidden inline-flex items-center gap-2 mt-5 mb-6 font-jakarta font-bold text-[15px] px-6 py-3 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] transition-all duration-200"
+              >
+                Apply now →
+              </a>
+            )}
+
+            {/* Full description */}
+            {job.description ? (
+              <div className="mt-8 text-[15.5px] leading-[1.8] text-v-ink/85 whitespace-pre-line">
+                {job.description}
+              </div>
+            ) : (
+              <p className="mt-8 text-v-muted italic">No description available.</p>
+            )}
+          </div>
+
+          {/* ── SIDEBAR ── */}
+          <aside className="lg:sticky lg:top-[90px] space-y-4">
+            {/* Info card */}
+            <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6">
+              {/* Badge */}
+              <div className={`inline-flex items-center gap-2 font-jakarta font-bold text-[11.5px] px-[13px] py-[7px] rounded-full mb-5 ${badge.pillClass}`}>
+                <span className={`w-2 h-2 rounded-full shrink-0 ${badge.dotClass}`} />
+                {badge.label.toUpperCase()}
+              </div>
+
+              {/* Meta */}
+              <div className="mb-5">
+                {job.location && (
+                  <MetaRow icon="📍">
+                    <span className="font-medium">{job.location}</span>
+                  </MetaRow>
+                )}
+                <MetaRow icon="💷">
+                  <span className="font-medium">{job.salary || "Salary not specified"}</span>
+                </MetaRow>
+                {job.posted_date && (
+                  <MetaRow icon="🗓">
+                    Posted <span className="font-medium">{job.posted_date}</span>
+                  </MetaRow>
+                )}
+              </div>
+
+              {/* Apply CTA */}
+              {job.apply_url ? (
+                <a
+                  href={job.apply_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full text-center font-jakarta font-bold text-[16px] px-6 py-3.5 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  Apply now →
+                </a>
+              ) : (
+                <div className="block w-full text-center font-jakarta font-bold text-[16px] px-6 py-3.5 rounded-xl bg-v-line text-v-muted cursor-not-allowed">
+                  No apply link
+                </div>
+              )}
+            </div>
+
+            {/* Sponsorship note */}
+            <div className="bg-violet-tint border border-violet-soft rounded-[16px] p-5 text-[13.5px] text-v-muted leading-relaxed">
+              <strong className="text-v-ink font-semibold block mb-1">About this badge</strong>
+              A &ldquo;{badge.label.toLowerCase()}&rdquo; label means {job.company} appears
+              on the Home Office register and/or the listing mentions sponsorship.
+              It is guidance, not a guarantee — confirm directly with the employer.
+            </div>
+          </aside>
         </div>
       </div>
     </div>

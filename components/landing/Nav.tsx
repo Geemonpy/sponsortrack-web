@@ -56,6 +56,7 @@ export default function Nav() {
         <a href="/#verify" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Verification</a>
         <a href="/#calc" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Salary check</a>
         <Link href="/pricing" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Pricing</Link>
+        <Link href="/resume" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Resume</Link>
         <button
           onClick={openAssistant}
           className="hidden sm:flex items-center gap-1.5 text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors"
