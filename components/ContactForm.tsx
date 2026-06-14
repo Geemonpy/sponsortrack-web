@@ -6,12 +6,14 @@ export default function ContactForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
   const [error, setError] = useState("");
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (honeypot) { setSent(true); return; } // bot trap — silently succeed
     if (!name.trim() || !email.trim() || !message.trim()) {
       setError("Please fill in all fields.");
       return;
@@ -46,6 +48,17 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">
+      {/* Honeypot — hidden from humans, bots fill it in */}
+      <input
+        type="text"
+        name="website"
+        value={honeypot}
+        onChange={(e) => setHoneypot(e.target.value)}
+        style={{ display: "none" }}
+        tabIndex={-1}
+        aria-hidden="true"
+        autoComplete="off"
+      />
       <div>
         <label className="block text-[13.5px] font-semibold text-v-ink mb-1.5">Name</label>
         <input

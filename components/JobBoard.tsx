@@ -33,6 +33,7 @@ export default function JobBoard({
 
   const [email, setEmail] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
+  const [honeypot, setHoneypot] = useState("");
 
   const fetchJobs = useCallback(async () => {
     setLoading(true);
@@ -63,6 +64,7 @@ export default function JobBoard({
   }, [fetchJobs]);
 
   async function subscribe() {
+    if (honeypot) return; // bot trap — silent no-op
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setAlertMsg("Please enter a valid email address.");
       return;
@@ -88,13 +90,15 @@ export default function JobBoard({
     { n: stats.today, l: "New today" },
   ];
 
+  // Default view: sponsor_confirmed + licensed_sponsor only.
+  // "Include unconfirmed" toggle adds sponsorship_mentioned (employer not on register).
   const displayJobs =
     badge !== ""
       ? jobs
       : includeUnconfirmed
       ? jobs
       : jobs.filter(
-          (j) => j.badge === "licensed_sponsor" || j.badge === "sponsorship_mentioned"
+          (j) => j.badge === "sponsor_confirmed" || j.badge === "licensed_sponsor"
         );
 
   const controlCls =
@@ -249,6 +253,17 @@ export default function JobBoard({
             </p>
           </div>
           <div className="relative">
+            {/* Honeypot — hidden from humans, bots fill it in */}
+            <input
+              type="text"
+              name="website"
+              value={honeypot}
+              onChange={(e) => setHoneypot(e.target.value)}
+              style={{ display: "none" }}
+              tabIndex={-1}
+              aria-hidden="true"
+              autoComplete="off"
+            />
             <div className="flex gap-2">
               <input
                 type="email"

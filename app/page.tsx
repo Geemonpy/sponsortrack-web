@@ -1,9 +1,9 @@
 import Nav from "@/components/landing/Nav";
 import HeroStage from "@/components/landing/HeroStage";
 import SalaryCalc from "@/components/landing/SalaryCalc";
-import CountUp from "@/components/landing/CountUp";
 import Reveal from "@/components/landing/Reveal";
 import Link from "next/link";
+import { getStats } from "@/lib/data";
 
 export const metadata = {
   title: { absolute: "Sponsor UK — UK Visa Sponsor Jobs" },
@@ -15,7 +15,7 @@ export const metadata = {
 const sectors = [
   {
     name: "Healthcare",
-    count: "320+ jobs",
+    count: "View roles →",
     href: "/jobs?category=care",
     bg: "#DCFCEF",
     color: "#10B981",
@@ -27,7 +27,7 @@ const sectors = [
   },
   {
     name: "Social Care",
-    count: "180+ jobs",
+    count: "View roles →",
     href: "/jobs?category=care",
     bg: "#EEEBFE",
     color: "#5B43E8",
@@ -40,7 +40,7 @@ const sectors = [
   },
   {
     name: "Technology",
-    count: "290+ jobs",
+    count: "View roles →",
     href: "/jobs?category=IT",
     bg: "#E4F1FF",
     color: "#2E90FA",
@@ -52,7 +52,7 @@ const sectors = [
   },
   {
     name: "Business",
-    count: "140+ jobs",
+    count: "View roles →",
     href: "/jobs?search=business",
     bg: "#FEF3DA",
     color: "#F59E0B",
@@ -64,7 +64,7 @@ const sectors = [
   },
   {
     name: "Finance",
-    count: "90+ jobs",
+    count: "View roles →",
     href: "/jobs?search=finance",
     bg: "#DCFCEF",
     color: "#10B981",
@@ -112,7 +112,7 @@ const steps = [
   },
   {
     title: "3. Apply directly",
-    desc: "Click through to the employer's own site to apply.",
+    desc: "Click through to the job listing to apply.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="30" height="30">
         <path d="M3 11l18-7-7 18-2-7-9-4z" />
@@ -154,14 +154,8 @@ const badges = [
   },
 ];
 
-const stats = [
-  { count: 125222, suffix: "", label: "Licensed sponsors checked" },
-  { count: 600, suffix: "+", label: "Confirmed sponsored jobs" },
-  { count: 4, suffix: "", label: "Sectors covered" },
-  { count: 24, suffix: "h", label: "Refresh cycle" },
-];
-
-export default function HomePage() {
+export default async function HomePage() {
+  const dbStats = await getStats();
   return (
     <div className="bg-v-bg text-v-ink font-sans overflow-x-hidden" style={{ fontFamily: "var(--font-body), sans-serif" }}>
       <Nav />
@@ -215,7 +209,7 @@ export default function HomePage() {
               <div className="flex gap-7 flex-wrap text-[14.5px] text-v-muted">
                 {[
                   ["125,222", "licensed sponsors"],
-                  ["4", "sectors covered"],
+                  ["5", "sectors covered"],
                   ["Daily", "updates"],
                   ["0", "dead-end applications"],
                 ].map(([val, label]) => (
@@ -349,11 +343,16 @@ export default function HomePage() {
       {/* ── STATS ── */}
       <section className="py-[90px] max-w-[1240px] mx-auto px-7">
         <div className="grid grid-cols-4 gap-[18px] max-[860px]:grid-cols-2">
-          {stats.map((s, i) => (
+          {[
+            { value: "125,222", label: "Licensed sponsors checked" },
+            { value: dbStats.total.toLocaleString("en-GB"), label: "Sponsor-checked jobs" },
+            { value: "5", label: "Sectors covered" },
+            { value: "24h", label: "Refresh cycle" },
+          ].map((s, i) => (
             <Reveal key={s.label} delay={i * 0.08}>
               <div className="bg-white border border-v-line rounded-[18px] px-[26px] py-[34px] shadow-[0_14px_44px_rgba(28,20,64,.07)] text-center">
                 <div className="font-jakarta font-extrabold text-[clamp(2rem,4vw,3rem)] text-violet">
-                  <CountUp target={s.count} suffix={s.suffix} />
+                  {s.value}
                 </div>
                 <div className="text-v-muted text-[14px] mt-1.5">{s.label}</div>
               </div>
@@ -409,15 +408,22 @@ export default function HomePage() {
           </div>
           <div>
             <h5 className="font-jakarta font-bold text-[14px] mb-3.5">Sectors</h5>
-            <Link href="/jobs" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Healthcare</Link>
-            <Link href="/jobs" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Social Care</Link>
-            <Link href="/jobs" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Tech &amp; Business</Link>
+            <Link href="/jobs?category=care" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Healthcare</Link>
+            <Link href="/jobs?category=care" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Social Care</Link>
+            <Link href="/jobs?category=IT" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Tech &amp; Business</Link>
           </div>
           <div>
             <h5 className="font-jakarta font-bold text-[14px] mb-3.5">Data</h5>
-            <a href="#" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Sponsor register</a>
-            <a href="#" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Daily sync</a>
-            <a href="#" className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors">Sources</a>
+            <a
+              href="https://www.gov.uk/government/publications/register-of-licensed-sponsors-workers"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-v-muted text-[15px] mb-2.5 hover:text-violet transition-colors"
+            >
+              Sponsor register ↗
+            </a>
+            <span className="block text-v-muted text-[15px] mb-2.5">Updated daily</span>
+            <span className="block text-v-muted text-[15px] mb-2.5">Source: Adzuna</span>
           </div>
         </div>
         <div className="border-t border-v-line pt-6 flex justify-between text-v-muted text-[14px] flex-wrap gap-2.5">
