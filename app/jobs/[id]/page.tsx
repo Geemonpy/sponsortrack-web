@@ -103,11 +103,35 @@ export default async function JobPage({ params }: { params: { id: string } }) {
 
             {/* Full description */}
             {job.description ? (
-              <div className="mt-8 text-[15.5px] leading-[1.8] text-v-ink/85 whitespace-pre-line">
-                {job.description}
+              <div className="mt-8">
+                <div className="text-[15.5px] leading-[1.8] text-v-ink/85 whitespace-pre-line">
+                  {job.description}
+                </div>
+                {job.apply_url && (
+                  <a
+                    href={job.apply_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-6 text-[14px] text-violet font-medium hover:underline"
+                  >
+                    View full description on employer site →
+                  </a>
+                )}
               </div>
             ) : (
-              <p className="mt-8 text-v-muted italic">No description available.</p>
+              <div className="mt-8">
+                <p className="text-v-muted italic">No description available.</p>
+                {job.apply_url && (
+                  <a
+                    href={job.apply_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 mt-4 text-[14px] text-violet font-medium hover:underline"
+                  >
+                    View full description on employer site →
+                  </a>
+                )}
+              </div>
             )}
           </div>
 

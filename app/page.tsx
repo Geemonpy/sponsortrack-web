@@ -6,9 +6,10 @@ import Reveal from "@/components/landing/Reveal";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Sponsor UK — Find UK jobs that sponsor your visa",
+  title: { absolute: "Sponsor UK — UK Visa Sponsor Jobs" },
   description:
     "Find UK jobs from employers on the Home Office register of licensed visa sponsors. IT and care roles, checked against the official sponsor register.",
+  alternates: { canonical: "/" },
 };
 
 const sectors = [
@@ -421,7 +422,12 @@ export default function HomePage() {
         </div>
         <div className="border-t border-v-line pt-6 flex justify-between text-v-muted text-[14px] flex-wrap gap-2.5">
           <span>© 2026 Sponsor UK · Built in London</span>
-          <span>Verified against the Home Office Register of Licensed Sponsors</span>
+          <div className="flex items-center gap-4 flex-wrap">
+            <Link href="/privacy" className="hover:text-violet transition-colors">Privacy</Link>
+            <Link href="/terms" className="hover:text-violet transition-colors">Terms</Link>
+            <Link href="/refund" className="hover:text-violet transition-colors">Refunds</Link>
+            <span>Verified against the Home Office Register of Licensed Sponsors</span>
+          </div>
         </div>
       </footer>
     </div>

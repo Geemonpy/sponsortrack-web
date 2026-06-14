@@ -51,7 +51,7 @@ export default function Nav() {
       </Link>
 
       <div className="flex items-center gap-7">
-        <a href="/#sectors" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Jobs</a>
+        <Link href="/jobs" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Jobs</Link>
         <a href="/#how" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">How it works</a>
         <a href="/#verify" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Verification</a>
         <a href="/#calc" className="hidden sm:block text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Salary check</a>

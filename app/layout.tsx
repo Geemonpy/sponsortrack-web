@@ -24,7 +24,7 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsortrack.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsortrack-web.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -45,9 +45,15 @@ export const metadata: Metadata = {
     title: "Sponsor UK — UK Visa Sponsor Jobs",
     description:
       "UK jobs from employers on the Home Office licensed sponsor register.",
-    url: siteUrl,
     siteName: "Sponsor UK",
     type: "website",
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sponsor UK — UK Visa Sponsor Jobs",
+    description: "UK jobs from employers on the Home Office licensed sponsor register.",
+    images: ["/opengraph-image"],
   },
   robots: { index: true, follow: true },
 };

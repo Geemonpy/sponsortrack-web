@@ -5,6 +5,7 @@ import Nav from "@/components/landing/Nav";
 export const metadata: Metadata = {
   title: "Pricing",
   description: "Get full access to every sponsor-checked UK job. Act fast with email alerts and AI resume tailoring.",
+  alternates: { canonical: "/pricing" },
 };
 
 function Check() {

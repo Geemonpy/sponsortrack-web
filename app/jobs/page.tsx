@@ -5,8 +5,9 @@ import Nav from "@/components/landing/Nav";
 export const revalidate = 300;
 
 export const metadata = {
-  title: "Browse Sponsored Jobs",
+  title: "Browse UK Visa Sponsor Jobs",
   description: "Find UK jobs from employers on the Home Office register of licensed visa sponsors.",
+  alternates: { canonical: "/jobs" },
 };
 
 export default async function JobsPage({

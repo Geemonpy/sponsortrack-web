@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Nav from "@/components/landing/Nav";
+import { supabaseBrowser } from "@/lib/supabaseClient";
 import type { ResumeResult } from "@/app/api/resume/route";
 
 // ── Score colour thresholds ────────────────────────────────────────────────
@@ -41,14 +43,28 @@ function ImpIcon() {
 const TEXTAREA = "w-full bg-v-bg border border-v-line rounded-[10px] px-4 py-3 text-[14.5px] text-v-ink placeholder:text-v-muted/60 focus:outline-none focus:border-violet transition-colors resize-none font-sans";
 
 export default function ResumePage() {
+  const router = useRouter();
   const [cv, setCv] = useState("");
   const [jd, setJd] = useState("");
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState<ResumeResult | null>(null);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    supabaseBrowser.auth.getSession().then(({ data }) => {
+      if (!data.session) {
+        router.replace("/login");
+      } else {
+        setAuthChecked(true);
+      }
+    });
+  }, [router]);
+
+  if (!authChecked) return null;
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
