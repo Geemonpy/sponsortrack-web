@@ -435,6 +435,9 @@ export default async function HomePage() {
             <span>Verified against the Home Office Register of Licensed Sponsors</span>
           </div>
         </div>
+        <div className="mt-3 text-[11px] text-v-muted/40 text-right">
+          {(process.env.NEXT_PUBLIC_COMMIT_SHA ?? "dev").slice(0, 7)} · {process.env.NEXT_PUBLIC_BUILD_DATE ?? ""}
+        </div>
       </footer>
     </div>
   );
