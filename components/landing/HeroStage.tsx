@@ -90,7 +90,7 @@ export default function HeroStage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          whileHover={{ y: -24, transition: { duration: 0.3 } }}
+          style={{ cursor: "default" }}
         >
           <div className="flex items-center justify-between mb-3.5">
             <div

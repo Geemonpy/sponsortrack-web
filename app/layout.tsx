@@ -64,7 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${jakarta.variable}`}>
+    <html lang="en-GB" className={`${display.variable} ${body.variable} ${jakarta.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Assistant />

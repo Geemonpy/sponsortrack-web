@@ -53,20 +53,54 @@ function MetaRow({ icon, children }: { icon: string; children: React.ReactNode }
   );
 }
 
-export default async function JobPage({ params }: { params: { id: string } }) {
+export default async function JobPage({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams?: { back?: string };
+}) {
   const job = await getJob(params.id);
   if (!job) notFound();
 
   const badge = BADGE_META[job.badge];
 
+  // Validate back URL is safe (must start with /jobs)
+  const rawBack = searchParams?.back ?? "";
+  const backHref =
+    rawBack.startsWith("/jobs") ? rawBack : "/jobs";
+
+  // JSON-LD for Google for Jobs
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "JobPosting",
+    title: job.title,
+    description: job.description ?? `${job.title} at ${job.company}. UK visa sponsorship role.`,
+    hiringOrganization: {
+      "@type": "Organization",
+      name: job.company,
+    },
+    jobLocation: job.location
+      ? { "@type": "Place", address: { "@type": "PostalAddress", addressLocality: job.location, addressCountry: "GB" } }
+      : { "@type": "Place", address: { "@type": "PostalAddress", addressCountry: "GB" } },
+    datePosted: job.posted_date ?? undefined,
+    employmentType: "FULL_TIME",
+    ...(job.apply_url ? { url: job.apply_url } : {}),
+    ...(job.salary ? { baseSalary: { "@type": "MonetaryAmount", currency: "GBP", value: job.salary } } : {}),
+  };
+
   return (
     <div className="min-h-screen bg-v-bg text-v-ink font-sans">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Nav />
 
       <div className="max-w-[1000px] mx-auto px-5 pt-[110px] pb-20">
         {/* Back link */}
         <Link
-          href="/jobs"
+          href={backHref}
           className="inline-flex items-center gap-1.5 text-[14px] font-medium text-v-muted hover:text-v-ink transition-colors mb-8"
         >
           ← Back to jobs

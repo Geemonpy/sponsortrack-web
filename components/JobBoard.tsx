@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import type { Job, Stats } from "@/lib/types";
 import JobCard from "./JobCard";
 
@@ -10,6 +11,28 @@ const CATS = [
   { key: "care", label: "Care" },
   { key: "graduate", label: "Graduate" },
 ];
+
+const PAGE_SIZE = 20;
+
+function SkeletonCard() {
+  return (
+    <div className="bg-white border border-v-line rounded-[18px] p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[0_14px_44px_rgba(28,20,64,.07)] animate-pulse">
+      <div className="flex-1 space-y-3">
+        <div className="h-4 w-24 bg-v-line rounded-full" />
+        <div className="h-5 w-3/4 bg-v-line rounded-lg" />
+        <div className="h-4 w-1/3 bg-v-line rounded-lg" />
+        <div className="flex gap-4">
+          <div className="h-3 w-20 bg-v-line rounded" />
+          <div className="h-3 w-16 bg-v-line rounded" />
+        </div>
+      </div>
+      <div className="shrink-0 flex sm:flex-col gap-2">
+        <div className="h-10 w-20 bg-v-line rounded-xl" />
+        <div className="h-10 w-20 bg-v-line rounded-xl" />
+      </div>
+    </div>
+  );
+}
 
 export default function JobBoard({
   initialJobs,
@@ -22,6 +45,9 @@ export default function JobBoard({
   initialCategory?: string;
   initialSearch?: string;
 }) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState(initialCategory);
@@ -30,10 +56,22 @@ export default function JobBoard({
   const [days, setDays] = useState("");
   const [location, setLocation] = useState("");
   const [search, setSearch] = useState(initialSearch);
+  const [page, setPage] = useState(() => Math.max(1, Number(searchParams.get("page") || 1)));
 
   const [email, setEmail] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const [honeypot, setHoneypot] = useState("");
+
+  // Reset page when filters change (but not on initial mount)
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    if (isFirstRender.current) { isFirstRender.current = false; return; }
+    setPage(1);
+    const params = new URLSearchParams(window.location.search);
+    params.delete("page");
+    const qs = params.toString();
+    router.replace(`/jobs${qs ? `?${qs}` : ""}`, { scroll: false });
+  }, [category, badge, days, location, search, includeUnconfirmed, router]);
 
   const fetchJobs = useCallback(async () => {
     setLoading(true);
@@ -64,7 +102,7 @@ export default function JobBoard({
   }, [fetchJobs]);
 
   async function subscribe() {
-    if (honeypot) return; // bot trap — silent no-op
+    if (honeypot) return;
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
       setAlertMsg("Please enter a valid email address.");
       return;
@@ -84,6 +122,14 @@ export default function JobBoard({
     }
   }
 
+  function loadMore() {
+    const next = page + 1;
+    setPage(next);
+    const params = new URLSearchParams(window.location.search);
+    params.set("page", String(next));
+    router.replace(`/jobs?${params.toString()}`, { scroll: false });
+  }
+
   const statItems = [
     { n: stats.total, l: "Total jobs" },
     { n: stats.licensed_sponsor, l: "Licensed sponsors" },
@@ -92,7 +138,7 @@ export default function JobBoard({
 
   // Default view: sponsor_confirmed + licensed_sponsor only.
   // "Include unconfirmed" toggle adds sponsorship_mentioned (employer not on register).
-  const displayJobs =
+  const filteredJobs =
     badge !== ""
       ? jobs
       : includeUnconfirmed
@@ -100,6 +146,22 @@ export default function JobBoard({
       : jobs.filter(
           (j) => j.badge === "sponsor_confirmed" || j.badge === "licensed_sponsor"
         );
+
+  const visibleJobs = filteredJobs.slice(0, page * PAGE_SIZE);
+  const hasMore = visibleJobs.length < filteredJobs.length;
+
+  // Build back-URL that encodes current filter state for "← Back to jobs" on detail pages
+  const backQs = (() => {
+    const p = new URLSearchParams();
+    if (category) p.set("category", category);
+    if (search) p.set("search", search);
+    if (days) p.set("days", days);
+    if (location) p.set("location", location);
+    if (badge) p.set("badge", badge);
+    if (page > 1) p.set("page", String(page));
+    const qs = p.toString();
+    return qs ? `/jobs?${qs}` : "/jobs";
+  })();
 
   const controlCls =
     "bg-white border border-v-line rounded-xl px-3.5 py-2 text-[14px] font-medium text-v-ink focus:outline-none focus:border-violet transition-colors";
@@ -218,10 +280,16 @@ export default function JobBoard({
       {/* ── RESULTS ── */}
       <main className="max-w-5xl mx-auto px-5 py-6">
         <div className="text-[13.5px] text-v-muted mb-4">
-          {loading ? "Loading…" : `${displayJobs.length} job${displayJobs.length === 1 ? "" : "s"}`}
+          {loading
+            ? "Loading…"
+            : `${filteredJobs.length} job${filteredJobs.length === 1 ? "" : "s"}`}
         </div>
 
-        {displayJobs.length === 0 && !loading ? (
+        {loading ? (
+          <div className="grid gap-3">
+            {Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)}
+          </div>
+        ) : filteredJobs.length === 0 ? (
           <div className="text-center py-20">
             <p className="font-jakarta font-bold text-[1.5rem] text-v-muted">
               No jobs match those filters.
@@ -229,11 +297,24 @@ export default function JobBoard({
             <p className="mt-2 text-v-muted/70">Try widening the time range or clearing the search.</p>
           </div>
         ) : (
-          <div className="grid gap-3">
-            {displayJobs.map((job) => (
-              <JobCard key={job.id} job={job} />
-            ))}
-          </div>
+          <>
+            <div className="grid gap-3">
+              {visibleJobs.map((job) => (
+                <JobCard key={job.id} job={job} back={backQs} />
+              ))}
+            </div>
+
+            {hasMore && (
+              <div className="mt-8 text-center">
+                <button
+                  onClick={loadMore}
+                  className="font-jakarta font-bold text-[15px] px-8 py-3 rounded-xl border border-v-line bg-white text-v-ink hover:border-violet hover:text-violet transition-all duration-200"
+                >
+                  Load more ({filteredJobs.length - visibleJobs.length} remaining)
+                </button>
+              </div>
+            )}
+          </>
         )}
       </main>
 

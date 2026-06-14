@@ -29,8 +29,11 @@ function timeAgo(dateStr: string | null): string {
   return `${Math.floor(days / 7)} weeks ago`;
 }
 
-export default function JobCard({ job }: { job: Job }) {
+export default function JobCard({ job, back }: { job: Job; back?: string }) {
   const b = BADGES[job.badge] ?? BADGES.sponsorship_mentioned;
+  const detailHref = back
+    ? `/jobs/${job.id}?back=${encodeURIComponent(back)}`
+    : `/jobs/${job.id}`;
   return (
     <article className="bg-white border border-v-line rounded-[18px] p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[0_14px_44px_rgba(28,20,64,.07)] hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(28,20,64,.13)] transition-all duration-200">
       <div className="flex-1 min-w-0">
@@ -44,7 +47,7 @@ export default function JobCard({ job }: { job: Job }) {
 
         {/* Title */}
         <h3 className="font-jakarta font-bold text-[1.1rem] leading-snug truncate text-v-ink">
-          <Link href={`/jobs/${job.id}`} className="hover:text-violet transition-colors">
+          <Link href={detailHref} className="hover:text-violet transition-colors">
             {job.title}
           </Link>
         </h3>
@@ -63,7 +66,7 @@ export default function JobCard({ job }: { job: Job }) {
       {/* Actions */}
       <div className="shrink-0 flex sm:flex-col gap-2">
         <Link
-          href={`/jobs/${job.id}`}
+          href={detailHref}
           className="text-center border border-v-line text-v-ink font-jakarta font-semibold text-[14px] px-5 py-2.5 rounded-xl hover:border-violet hover:text-violet transition-colors"
         >
           Details

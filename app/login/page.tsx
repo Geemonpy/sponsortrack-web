@@ -23,6 +23,9 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [resetMode, setResetMode] = useState(false);
+  const [resetSent, setResetSent] = useState(false);
+  const [resetBusy, setResetBusy] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -48,6 +51,19 @@ export default function LoginPage() {
       options: { redirectTo: `${window.location.origin}/` },
     });
     if (err) setError(err.message);
+  }
+
+  async function handleReset(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) { setError("Enter your email address above first."); return; }
+    setResetBusy(true);
+    setError("");
+    const { error: err } = await supabaseBrowser.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/callback`,
+    });
+    setResetBusy(false);
+    if (err) setError(err.message);
+    else setResetSent(true);
   }
 
   const inputCls =
@@ -118,6 +134,43 @@ export default function LoginPage() {
                 {busy ? "Signing in…" : "Sign in"}
               </button>
             </form>
+
+            {/* Forgot password */}
+            <div className="mt-4 pt-4 border-t border-v-line">
+              {resetSent ? (
+                <div className="bg-v-green-soft border border-v-green/30 rounded-[10px] px-4 py-3 text-[13.5px] text-v-green text-center">
+                  ✓ Reset link sent — check your inbox.
+                </div>
+              ) : resetMode ? (
+                <form onSubmit={handleReset} className="space-y-3">
+                  <p className="text-[13.5px] text-v-muted">
+                    Enter your email above and we&apos;ll send a reset link.
+                  </p>
+                  <button
+                    type="submit"
+                    disabled={resetBusy}
+                    className="w-full font-jakarta font-semibold text-[14px] py-2.5 rounded-[10px] border border-violet text-violet hover:bg-violet hover:text-white disabled:opacity-60 transition-all duration-200"
+                  >
+                    {resetBusy ? "Sending…" : "Send reset link"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setResetMode(false); setError(""); }}
+                    className="w-full text-[13px] text-v-muted hover:text-v-ink transition-colors"
+                  >
+                    Cancel
+                  </button>
+                </form>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => { setResetMode(true); setError(""); }}
+                  className="w-full text-[13.5px] text-v-muted hover:text-violet transition-colors"
+                >
+                  Forgot password?
+                </button>
+              )}
+            </div>
           </div>
 
           <p className="text-center text-[14px] text-v-muted mt-5">

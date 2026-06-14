@@ -161,7 +161,7 @@ export default async function HomePage() {
       <Nav />
 
       {/* ── HERO ── */}
-      <header className="pt-[150px] pb-[70px] relative overflow-hidden">
+      <header className="pt-[150px] pb-[30px] relative overflow-hidden">
         <div className="max-w-[1240px] mx-auto px-7 grid grid-cols-[1.02fr_0.98fr] gap-10 items-center max-[940px]:grid-cols-1">
           {/* Left */}
           <div>
@@ -190,7 +190,7 @@ export default async function HomePage() {
                 className="inline-flex items-center gap-3 font-semibold text-v-ink"
               >
                 <span className="w-[46px] h-[46px] rounded-full border border-v-line bg-white flex items-center justify-center text-violet shadow-[0_14px_44px_rgba(28,20,64,.07)] hover:bg-violet hover:text-white transition-all duration-200 text-sm">
-                  ▶
+                  ↓
                 </span>
                 How it works
               </a>
@@ -224,7 +224,7 @@ export default async function HomePage() {
       </header>
 
       {/* ── SECTORS ── */}
-      <section id="sectors" className="py-[90px] max-w-[1240px] mx-auto px-7">
+      <section id="sectors" className="pt-[50px] pb-[90px] max-w-[1240px] mx-auto px-7">
         <div className="text-center max-w-[640px] mx-auto mb-[18px]">
           <Reveal>
             <div className="text-violet font-jakarta font-bold text-[14px] tracking-[0.04em] uppercase mb-[14px]">Browse by sector</div>
