@@ -202,41 +202,33 @@ export default async function HomePage() {
         </div>
 
         {/* Trust strip */}
-        <div className="max-w-[1240px] mx-auto px-7 mt-16">
-          <Reveal>
-            <div className="bg-white border border-v-line rounded-[20px] shadow-[0_14px_44px_rgba(28,20,64,.07)] px-[30px] py-6 flex items-center justify-between gap-6 flex-wrap">
-              <span className="font-jakarta font-bold text-[15px] text-v-ink">Cross-checked against the Home Office register</span>
-              <div className="flex gap-7 flex-wrap text-[14.5px] text-v-muted">
-                {[
-                  ["125,222", "licensed sponsors"],
-                  ["5", "sectors covered"],
-                  ["Daily", "updates"],
-                  ["0", "dead-end applications"],
-                ].map(([val, label]) => (
-                  <div key={label} className="flex items-center gap-2">
-                    <b className="text-violet font-jakarta">{val}</b> {label}
-                  </div>
-                ))}
-              </div>
+        <div className="max-w-[1240px] mx-auto px-7 mt-10">
+          <div className="bg-white border border-v-line rounded-[20px] shadow-[0_14px_44px_rgba(28,20,64,.07)] px-[30px] py-6 flex items-center justify-between gap-6 flex-wrap">
+            <span className="font-jakarta font-bold text-[15px] text-v-ink">Cross-checked against the Home Office register</span>
+            <div className="flex gap-7 flex-wrap text-[14.5px] text-v-muted">
+              {[
+                ["125,222", "licensed sponsors"],
+                ["5", "sectors covered"],
+                ["Daily", "updates"],
+                ["0", "dead-end applications"],
+              ].map(([val, label]) => (
+                <div key={label} className="flex items-center gap-2">
+                  <b className="text-violet font-jakarta">{val}</b> {label}
+                </div>
+              ))}
             </div>
-          </Reveal>
+          </div>
         </div>
       </header>
 
       {/* ── SECTORS ── */}
       <section id="sectors" className="pt-[50px] pb-[90px] max-w-[1240px] mx-auto px-7">
         <div className="text-center max-w-[640px] mx-auto mb-[18px]">
-          <Reveal>
-            <div className="text-violet font-jakarta font-bold text-[14px] tracking-[0.04em] uppercase mb-[14px]">Browse by sector</div>
-          </Reveal>
-          <Reveal delay={0.05}>
-            <h2 className="font-jakarta font-extrabold tracking-[-0.02em] leading-[1.05] text-[clamp(2rem,4.4vw,3.2rem)]">
-              Sponsorship isn&apos;t just <span className="text-violet">for techies.</span>
-            </h2>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="text-v-muted mt-3.5 text-[17px]">Real sponsored roles across the fields that actually hire from overseas.</p>
-          </Reveal>
+          <div className="text-violet font-jakarta font-bold text-[14px] tracking-[0.04em] uppercase mb-[14px]">Browse by sector</div>
+          <h2 className="font-jakarta font-extrabold tracking-[-0.02em] leading-[1.05] text-[clamp(2rem,4.4vw,3.2rem)]">
+            Sponsorship isn&apos;t just <span className="text-violet">for techies.</span>
+          </h2>
+          <p className="text-v-muted mt-3.5 text-[17px]">Real sponsored roles across the fields that actually hire from overseas.</p>
         </div>
         <div className="grid grid-cols-6 gap-4 mt-12 max-[980px]:grid-cols-3 max-[560px]:grid-cols-2">
           {sectors.map((s, i) => (

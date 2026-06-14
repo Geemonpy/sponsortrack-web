@@ -91,6 +91,7 @@ export default function HeroStage() {
             ease: "easeInOut",
           }}
           style={{ cursor: "default" }}
+          aria-hidden="true"
         >
           <div className="flex items-center justify-between mb-3.5">
             <div
@@ -117,6 +118,8 @@ export default function HeroStage() {
         className="absolute right-[20%] top-[2%] bg-white border border-v-line shadow-[0_14px_44px_rgba(28,20,64,.07)] rounded-full px-3.5 py-2 font-semibold text-[13px] flex items-center gap-2 max-[520px]:hidden"
         animate={{ y: [0, -18, 0] }}
         transition={{ duration: 8, delay: -3, repeat: Infinity, ease: "easeInOut" }}
+        style={{ cursor: "default" }}
+        aria-hidden="true"
       >
         🤝 Social Care
       </motion.div>
@@ -125,6 +128,8 @@ export default function HeroStage() {
         className="absolute left-0 top-[46%] bg-white border border-v-line shadow-[0_14px_44px_rgba(28,20,64,.07)] rounded-full px-3.5 py-2 font-semibold text-[13px] flex items-center gap-2 max-[520px]:hidden"
         animate={{ y: [0, -18, 0] }}
         transition={{ duration: 8, delay: -1, repeat: Infinity, ease: "easeInOut" }}
+        style={{ cursor: "default" }}
+        aria-hidden="true"
       >
         📈 Business
       </motion.div>

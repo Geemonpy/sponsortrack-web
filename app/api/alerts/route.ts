@@ -9,6 +9,8 @@ export async function POST(req: NextRequest) {
   let email = "";
   try {
     const body = await req.json();
+    const honeypot = String(body.website || "").trim();
+    if (honeypot) return NextResponse.json({ status: "subscribed" });
     email = String(body.email || "").trim().toLowerCase();
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });

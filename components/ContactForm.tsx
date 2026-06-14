@@ -11,9 +11,9 @@ export default function ContactForm() {
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (honeypot) { setSent(true); return; } // bot trap — silently succeed
+    if (honeypot) { setSent(true); return; } // bot trap — silently succeed client-side
     if (!name.trim() || !email.trim() || !message.trim()) {
       setError("Please fill in all fields.");
       return;
@@ -24,11 +24,19 @@ export default function ContactForm() {
     }
     setError("");
     setBusy(true);
-    // Simulate a network delay, then show success
-    setTimeout(() => {
-      setBusy(false);
+    try {
+      const r = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ name, email, message, website: honeypot }),
+      });
+      if (!r.ok) throw new Error();
       setSent(true);
-    }, 800);
+    } catch {
+      setError("Something went wrong — please try again.");
+    } finally {
+      setBusy(false);
+    }
   }
 
   const inputCls =
