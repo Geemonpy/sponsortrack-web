@@ -328,12 +328,12 @@ export default function JobBoard({
 
       {/* ── EMAIL CAPTURE ── */}
       <section id="alerts" className="max-w-5xl mx-auto px-5 mt-10 mb-16">
-        <div className="relative rounded-[30px] overflow-hidden bg-gradient-to-br from-violet to-violet-2 px-10 py-16 grid sm:grid-cols-2 gap-8 items-center">
+        <div className="relative rounded-[30px] overflow-hidden bg-gradient-to-br from-violet to-violet-2 px-6 sm:px-10 py-12 sm:py-16 grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
           <div
             className="absolute w-[300px] h-[300px] rounded-full top-[-140px] right-[-100px] pointer-events-none"
             style={{ background: "rgba(255,255,255,0.12)", filter: "blur(10px)" }}
           />
-          <div className="relative">
+          <div className="relative min-w-0">
             <h2 className="font-jakarta font-extrabold text-[1.9rem] leading-tight text-white">
               Get daily visa-sponsor job alerts
             </h2>
@@ -341,7 +341,7 @@ export default function JobBoard({
               New sponsor-verified roles in your inbox every morning. Free, no spam.
             </p>
           </div>
-          <div className="relative">
+          <div className="relative min-w-0">
             {/* Honeypot — hidden from humans, bots fill it in */}
             <input
               type="text"
@@ -374,7 +374,7 @@ export default function JobBoard({
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="max-w-5xl mx-auto px-5 py-8 border-t border-v-line text-center text-[13px] text-v-muted/60">
+      <footer className="max-w-5xl mx-auto px-5 pt-8 pb-28 border-t border-v-line text-center text-[13px] text-v-muted/60">
         Sponsor data: Home Office register of licensed sponsors. Job data: Adzuna. Badges are
         guidance, not a guarantee — always confirm with the employer.
       </footer>

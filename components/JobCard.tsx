@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MapPin, PoundSterling, Clock } from "lucide-react";
 import type { Job, Badge } from "@/lib/types";
 
 const BADGES: Record<Badge, { label: string; pillCls: string; dotCls: string }> = {
@@ -57,9 +58,20 @@ export default function JobCard({ job, back }: { job: Job; back?: string }) {
 
         {/* Meta */}
         <div className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[13.5px] text-v-muted">
-          {job.location && <span>📍 {job.location}</span>}
-          <span>💷 {job.salary || "Not specified"}</span>
-          <span>🕑 {timeAgo(job.posted_date)}</span>
+          {job.location && (
+            <span className="flex items-center gap-1">
+              <MapPin size={13} className="shrink-0" />
+              {job.location}
+            </span>
+          )}
+          <span className="flex items-center gap-1">
+            <PoundSterling size={13} className="shrink-0" />
+            {job.salary || "Not specified"}
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock size={13} className="shrink-0" />
+            {timeAgo(job.posted_date)}
+          </span>
         </div>
       </div>
 
