@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { AnimatePresence, motion } from "framer-motion";
 import type { User } from "@supabase/supabase-js";
 import { supabaseBrowser } from "@/lib/supabaseClient";
 
@@ -67,9 +68,9 @@ export default function Nav() {
         {/* Desktop links */}
         <div className="hidden sm:flex items-center gap-7">
           <Link href="/jobs" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Jobs</Link>
-          <a href="/#how" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">How it works</a>
-          <a href="/#verify" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Verification</a>
-          <a href="/#calc" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Salary check</a>
+          <Link href="/#how" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">How it works</Link>
+          <Link href="/#verify" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Verification</Link>
+          <Link href="/#calc" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Salary check</Link>
           <Link href="/pricing" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Pricing</Link>
           <Link href="/resume" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Resume</Link>
           <button
@@ -102,7 +103,7 @@ export default function Nav() {
 
           <Link
             href="/jobs"
-            className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200 flex items-center gap-2"
+            className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 flex items-center gap-2"
           >
             Browse jobs
           </Link>
@@ -113,7 +114,7 @@ export default function Nav() {
           <Link
             href="/jobs"
             onClick={() => setMobileOpen(false)}
-            className="font-jakarta font-bold text-[14px] px-4 py-2.5 rounded-xl bg-violet text-white shadow-[0_6px_16px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] transition-all duration-200"
+            className="font-jakarta font-bold text-[14px] px-4 py-2.5 rounded-xl bg-violet text-white shadow-[0_6px_16px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] active:scale-[0.96] transition-all duration-200"
           >
             Browse jobs
           </Link>
@@ -142,42 +143,53 @@ export default function Nav() {
       </nav>
 
       {/* Mobile drawer */}
-      {mobileOpen && (
-        <div
-          className="sm:hidden fixed inset-0 z-40 pt-[68px]"
-          onClick={() => setMobileOpen(false)}
-        >
-          <div
-            className="mx-4 mt-2 bg-white border border-v-line rounded-[18px] shadow-[0_20px_60px_rgba(28,20,64,.14)] p-5"
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            key="mobile-drawer-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="sm:hidden fixed inset-0 z-40 pt-[68px]"
+            onClick={() => setMobileOpen(false)}
           >
-            <Link href="/jobs" onClick={() => setMobileOpen(false)} className={linkCls}>Jobs</Link>
-            <a href="/#how" onClick={() => setMobileOpen(false)} className={linkCls}>How it works</a>
-            <a href="/#verify" onClick={() => setMobileOpen(false)} className={linkCls}>Verification</a>
-            <a href="/#calc" onClick={() => setMobileOpen(false)} className={linkCls}>Salary check</a>
-            <Link href="/pricing" onClick={() => setMobileOpen(false)} className={linkCls}>Pricing</Link>
-            <Link href="/resume" onClick={() => setMobileOpen(false)} className={linkCls}>Resume</Link>
-            <button onClick={openAssistant} className={`${linkCls} w-full text-left flex items-center gap-2`}>
-              <span className="text-violet">✦</span> Ask AI
-            </button>
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="mx-4 mt-2 bg-white border border-v-line rounded-[18px] shadow-[0_20px_60px_rgba(28,20,64,.14)] p-5"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Link href="/jobs" onClick={() => setMobileOpen(false)} className={linkCls}>Jobs</Link>
+              <Link href="/#how" onClick={() => setMobileOpen(false)} className={linkCls}>How it works</Link>
+              <Link href="/#verify" onClick={() => setMobileOpen(false)} className={linkCls}>Verification</Link>
+              <Link href="/#calc" onClick={() => setMobileOpen(false)} className={linkCls}>Salary check</Link>
+              <Link href="/pricing" onClick={() => setMobileOpen(false)} className={linkCls}>Pricing</Link>
+              <Link href="/resume" onClick={() => setMobileOpen(false)} className={linkCls}>Resume</Link>
+              <button onClick={openAssistant} className={`${linkCls} w-full text-left flex items-center gap-2`}>
+                <span className="text-violet">✦</span> Ask AI
+              </button>
 
-            <div className="border-t border-v-line my-3" />
+              <div className="border-t border-v-line my-3" />
 
-            {user ? (
-              <div className="flex items-center justify-between">
-                <span className="text-[14px] text-v-muted truncate">{user.email}</span>
-                <button onClick={signOut} className="text-[14px] text-violet font-semibold ml-4 shrink-0">
-                  Sign out
-                </button>
-              </div>
-            ) : (
-              <Link href="/login" onClick={() => setMobileOpen(false)} className="block text-[16px] font-semibold text-violet py-2">
-                Sign in →
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
+              {user ? (
+                <div className="flex items-center justify-between">
+                  <span className="text-[14px] text-v-muted truncate">{user.email}</span>
+                  <button onClick={signOut} className="text-[14px] text-violet font-semibold ml-4 shrink-0">
+                    Sign out
+                  </button>
+                </div>
+              ) : (
+                <Link href="/login" onClick={() => setMobileOpen(false)} className="block text-[16px] font-semibold text-violet py-2">
+                  Sign in →
+                </Link>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

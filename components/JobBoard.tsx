@@ -273,7 +273,7 @@ export default function JobBoard({
           {/* Search button */}
           <button
             onClick={fetchJobs}
-            className="bg-violet text-white font-jakarta font-bold text-[14px] px-4 py-2 rounded-xl hover:bg-[#4a34d4] transition-colors whitespace-nowrap"
+            className="bg-violet text-white font-jakarta font-bold text-[14px] px-4 py-2 rounded-xl hover:bg-[#4a34d4] active:scale-[0.96] transition-all whitespace-nowrap"
           >
             Search
           </button>
@@ -363,7 +363,7 @@ export default function JobBoard({
               />
               <button
                 onClick={subscribe}
-                className="bg-white text-violet font-jakarta font-bold px-5 py-3 rounded-xl hover:bg-violet-tint transition-colors shrink-0"
+                className="bg-white text-violet font-jakarta font-bold px-5 py-3 rounded-xl hover:bg-violet-tint active:scale-[0.96] transition-all shrink-0"
               >
                 Subscribe
               </button>

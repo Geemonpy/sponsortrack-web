@@ -181,7 +181,7 @@ export default async function HomePage() {
             <div className="flex items-center gap-[18px] flex-wrap">
               <Link
                 href="/jobs"
-                className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200 inline-flex items-center gap-2"
+                className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 inline-flex items-center gap-2"
               >
                 Explore jobs →
               </Link>
@@ -369,7 +369,7 @@ export default async function HomePage() {
             </p>
             <Link
               href="/jobs"
-              className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 transition-all duration-200 relative"
+              className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 relative"
             >
               Find your sponsored job →
             </Link>

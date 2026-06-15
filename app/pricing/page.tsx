@@ -81,7 +81,7 @@ export default function PricingPage() {
             {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "job-access" }) */}
             <Link
               href="/checkout?plan=job-access"
-              className="block text-center font-jakarta font-bold text-[15px] px-6 py-3.5 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white transition-all duration-200"
+              className="block text-center font-jakarta font-bold text-[15px] px-6 py-3.5 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200"
             >
               Get Job Access
             </Link>
@@ -117,7 +117,7 @@ export default function PricingPage() {
             {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "pro" }) */}
             <Link
               href="/checkout?plan=pro"
-              className="block text-center font-jakarta font-bold text-[15px] px-6 py-3.5 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
+              className="block text-center font-jakarta font-bold text-[15px] px-6 py-3.5 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200"
             >
               Go Pro
             </Link>
@@ -190,7 +190,7 @@ export default function PricingPage() {
           {/* TODO: Stripe Checkout — replace Link with checkout action */}
           <Link
             href="/checkout?plan=pro"
-            className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 transition-all duration-200 relative"
+            className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 relative"
           >
             Go Pro — £9.99/month →
           </Link>

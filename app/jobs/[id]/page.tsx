@@ -129,7 +129,7 @@ export default async function JobPage({
                 href={job.apply_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="lg:hidden inline-flex items-center gap-2 mt-5 mb-6 font-jakarta font-bold text-[15px] px-6 py-3 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] transition-all duration-200"
+                className="lg:hidden inline-flex items-center gap-2 mt-5 mb-6 font-jakarta font-bold text-[15px] px-6 py-3 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] active:scale-[0.96] transition-all duration-200"
               >
                 Apply now →
               </a>
@@ -202,7 +202,7 @@ export default async function JobPage({
                   href={job.apply_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full text-center font-jakarta font-bold text-[16px] px-6 py-3.5 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
+                  className="block w-full text-center font-jakarta font-bold text-[16px] px-6 py-3.5 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200"
                 >
                   Apply now →
                 </a>

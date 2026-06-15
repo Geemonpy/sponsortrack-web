@@ -67,7 +67,7 @@ export default function JobCard({ job, back }: { job: Job; back?: string }) {
       <div className="shrink-0 flex sm:flex-col gap-2">
         <Link
           href={detailHref}
-          className="text-center border border-v-line text-v-ink font-jakarta font-semibold text-[14px] px-5 py-2.5 rounded-xl hover:border-violet hover:text-violet transition-colors"
+          className="text-center border border-v-line text-v-ink font-jakarta font-semibold text-[14px] px-5 py-2.5 rounded-xl hover:border-violet hover:text-violet active:scale-[0.96] transition-all"
         >
           Details
         </Link>
@@ -76,7 +76,7 @@ export default function JobCard({ job, back }: { job: Job; back?: string }) {
             href={job.apply_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-center bg-violet text-white font-jakarta font-bold text-[14px] px-5 py-2.5 rounded-xl shadow-[0_10px_24px_rgba(91,67,232,0.25)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
+            className="text-center bg-violet text-white font-jakarta font-bold text-[14px] px-5 py-2.5 rounded-xl shadow-[0_10px_24px_rgba(91,67,232,0.25)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200"
           >
             Apply
           </a>
