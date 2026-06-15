@@ -269,6 +269,14 @@ export default function JobBoard({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
+
+          {/* Search button */}
+          <button
+            onClick={fetchJobs}
+            className="bg-violet text-white font-jakarta font-bold text-[14px] px-4 py-2 rounded-xl hover:bg-[#4a34d4] transition-colors whitespace-nowrap"
+          >
+            Search
+          </button>
         </div>
 
         <p className="mt-2 text-[12px] text-v-muted/60">

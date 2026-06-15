@@ -30,7 +30,7 @@ export default async function JobsPage({
   ]);
 
   return (
-    <div className="min-h-screen bg-v-bg">
+    <div className="min-h-screen bg-v-bg overflow-x-hidden">
       <Nav />
       <JobBoard
         initialJobs={jobs}

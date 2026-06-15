@@ -16,6 +16,7 @@
 body {
   background-color: #FBFAFE;
   color: #15131F;
+  overflow-x: hidden;
 }
 
 @keyframes fade {

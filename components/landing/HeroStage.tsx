@@ -57,7 +57,7 @@ export default function HeroStage() {
   }, []);
 
   return (
-    <div ref={stageRef} className="relative h-[480px] max-md:h-[420px] max-md:mt-2.5">
+    <div ref={stageRef} className="relative h-[480px] max-md:h-[420px] max-md:mt-2.5 overflow-hidden">
       {/* Glow */}
       <div
         data-par="1"
