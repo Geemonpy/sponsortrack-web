@@ -19,13 +19,10 @@ export default async function JobsPage({
   const initialSearch = searchParams.search ?? "";
 
   const [jobs, stats] = await Promise.all([
-    getJobs({
-      limit: 200,
-      sourceType: "main",
-      // Pre-filter server-side so the initial render already shows the right jobs
-      category: initialCategory && initialCategory !== "graduate" ? initialCategory : undefined,
-      search: initialSearch || undefined,
-    }),
+    // SSR always returns free preview (can't check auth without cookie session).
+    // The client-side API fetch immediately re-runs with the auth token and
+    // upgrades subscribers to the full result set.
+    getJobs({ limit: 20, sourceType: "main" }),
     getStats(),
   ]);
 

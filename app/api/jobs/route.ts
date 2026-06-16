@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getJobs } from "@/lib/data";
+import { getUserTier } from "@/lib/stripe/subscription";
+import { supabase } from "@/lib/supabaseServer";
 
 export const dynamic = "force-dynamic";
 
@@ -41,16 +43,34 @@ export async function GET(req: NextRequest) {
     );
   }
 
+  // Check subscriber status from Bearer token
+  let isSubscriber = false;
+  const token = req.headers.get("authorization")?.replace("Bearer ", "").trim();
+  if (token) {
+    const { data: { user } } = await supabase.auth.getUser(token);
+    if (user) {
+      const tier = await getUserTier(user.id);
+      isSubscriber = tier === "job_access" || tier === "alerts";
+    }
+  }
+
   const sp = req.nextUrl.searchParams;
-  const daysRaw = sp.get("days");
-  const jobs = await getJobs({
-    badge: sp.get("badge") || undefined,
-    category: sp.get("category") || undefined,
-    location: sp.get("location") || undefined,
-    search: sp.get("search") || undefined,
-    days: daysRaw ? Number(daysRaw) : undefined,
-    limit: 200,
-    sourceType: "main",
-  });
-  return NextResponse.json({ count: jobs.length, jobs });
+
+  if (isSubscriber) {
+    const daysRaw = sp.get("days");
+    const jobs = await getJobs({
+      badge: sp.get("badge") || undefined,
+      category: sp.get("category") || undefined,
+      location: sp.get("location") || undefined,
+      search: sp.get("search") || undefined,
+      days: daysRaw ? Number(daysRaw) : undefined,
+      limit: 200,
+      sourceType: "main",
+    });
+    return NextResponse.json({ count: jobs.length, jobs, capped: false });
+  }
+
+  // Free / unauthenticated: 20 most-recent verified jobs, no filters applied
+  const jobs = await getJobs({ limit: 20, sourceType: "main" });
+  return NextResponse.json({ count: jobs.length, jobs, capped: true });
 }
