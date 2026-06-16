@@ -4,7 +4,7 @@ import Nav from "@/components/landing/Nav";
 
 export const metadata: Metadata = {
   title: "Pricing",
-  description: "Get full access to every sponsor-checked UK job. Act fast with email alerts and AI resume tailoring.",
+  description: "Simple, transparent pricing for UK visa sponsorship jobs. Browse free or upgrade for email alerts.",
   alternates: { canonical: "/pricing" },
 };
 
@@ -17,21 +17,32 @@ function Check() {
   );
 }
 
-const jobAccessFeatures = [
-  "500+ sponsor-verified UK jobs",
-  "Filter by sector, badge & location",
-  "Daily-refreshed listings",
-  "Cross-checked against the Home Office register",
+const freeFeatures = [
+  "Browse all sponsor-verified job listings",
+  "Filter by sector & badge",
   "UK visa & sponsorship guidance",
+  "Home Office register verification",
 ];
 
-const proFeatures = [
+const jobAccessFeatures = [
+  "Everything in Free",
+  "500+ listings, refreshed daily",
+  "Full job details & one-click apply",
+  "Sector, badge & location filters",
+];
+
+const alertsFeatures = [
   "Everything in Job Access",
   "Email alerts when new matching jobs land",
   "Be the first to apply — act before others",
-  "AI Resume Tailoring tool",
-  "Match score & gap analysis per role",
   "Priority support",
+];
+
+const annualFeatures = [
+  "Everything in Job Access + Alerts",
+  "Billed annually — save 15%",
+  "2 months effectively free",
+  "Best value for active job seekers",
 ];
 
 export default function PricingPage() {
@@ -49,77 +60,120 @@ export default function PricingPage() {
           <span className="text-violet">Act before the crowd.</span>
         </h1>
         <p className="text-v-muted text-[18px] max-w-[540px] mx-auto">
-          500+ sponsor-checked jobs, refreshed daily. Upgrade to Pro for instant email alerts
-          and our AI resume tailoring tool — so you apply first with the strongest CV.
+          Browse free, or upgrade to unlock daily alerts and be the first to apply.
         </p>
       </section>
 
       {/* ── PRICING CARDS ── */}
-      <section className="max-w-4xl mx-auto px-5 pb-[90px]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <section className="max-w-5xl mx-auto px-5 pb-[90px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
 
-          {/* Job Access */}
-          <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8 flex flex-col">
+          {/* Free */}
+          <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6 flex flex-col">
+            <div className="mb-5">
+              <h2 className="font-jakarta font-extrabold text-[1.15rem] text-v-ink mb-1">Free</h2>
+              <p className="text-v-muted text-[13.5px]">Browse sponsor-verified jobs at no cost.</p>
+            </div>
             <div className="mb-6">
-              <h2 className="font-jakarta font-extrabold text-[1.25rem] text-v-ink mb-1">Job Access</h2>
-              <p className="text-v-muted text-[14.5px]">Full access to every sponsor-checked listing.</p>
+              <span className="font-jakarta font-extrabold text-[2.5rem] text-v-ink leading-none">£0</span>
+              <span className="text-v-muted text-[15px] ml-1.5">/forever</span>
             </div>
-
-            <div className="mb-7">
-              <span className="font-jakarta font-extrabold text-[2.8rem] text-v-ink leading-none">£6.99</span>
-              <span className="text-v-muted text-[16px] ml-1.5">/month</span>
-            </div>
-
-            <ul className="space-y-3 mb-8 flex-1">
-              {jobAccessFeatures.map((f) => (
-                <li key={f} className="flex items-start gap-2.5 text-[15px] text-v-ink">
+            <ul className="space-y-2.5 mb-7 flex-1">
+              {freeFeatures.map((f) => (
+                <li key={f} className="flex items-start gap-2 text-[14px] text-v-ink">
                   <Check /> {f}
                 </li>
               ))}
             </ul>
+            <Link
+              href="/jobs"
+              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border border-v-line text-v-muted hover:border-violet hover:text-violet active:scale-[0.96] transition-all duration-200"
+            >
+              Browse jobs
+            </Link>
+          </div>
 
+          {/* Job Access */}
+          <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6 flex flex-col">
+            <div className="mb-5">
+              <h2 className="font-jakarta font-extrabold text-[1.15rem] text-v-ink mb-1">Job Access</h2>
+              <p className="text-v-muted text-[13.5px]">Full access to every sponsor-checked listing.</p>
+            </div>
+            <div className="mb-6">
+              <span className="font-jakarta font-extrabold text-[2.5rem] text-v-ink leading-none">£8.99</span>
+              <span className="text-v-muted text-[15px] ml-1.5">/month</span>
+            </div>
+            <ul className="space-y-2.5 mb-7 flex-1">
+              {jobAccessFeatures.map((f) => (
+                <li key={f} className="flex items-start gap-2 text-[14px] text-v-ink">
+                  <Check /> {f}
+                </li>
+              ))}
+            </ul>
             {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "job-access" }) */}
             <Link
               href="/checkout?plan=job-access"
-              className="block text-center font-jakarta font-bold text-[15px] px-6 py-3.5 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200"
+              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200"
             >
               Get Job Access
             </Link>
           </div>
 
-          {/* Pro */}
-          <div className="relative bg-white border-2 border-violet rounded-[22px] shadow-[0_26px_70px_rgba(91,67,232,0.18)] p-8 flex flex-col">
-            {/* Most popular badge */}
+          {/* Job Access + Alerts — Most Popular */}
+          <div className="relative bg-white border-2 border-violet rounded-[22px] shadow-[0_26px_70px_rgba(91,67,232,0.18)] p-6 flex flex-col">
             <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-              <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-violet to-violet-2 text-white font-jakarta font-bold text-[12px] px-4 py-1.5 rounded-full shadow-[0_6px_16px_rgba(91,67,232,0.35)]">
-                <span>★</span> Most popular
+              <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-violet to-violet-2 text-white font-jakarta font-bold text-[12px] px-4 py-1.5 rounded-full shadow-[0_6px_16px_rgba(91,67,232,0.35)] whitespace-nowrap">
+                <span>⭐</span> Most popular
               </span>
             </div>
-
-            <div className="mb-6 mt-2">
-              <h2 className="font-jakarta font-extrabold text-[1.25rem] text-v-ink mb-1">Pro</h2>
-              <p className="text-v-muted text-[14.5px]">First-mover advantage + AI-powered applications.</p>
+            <div className="mb-5 mt-2">
+              <h2 className="font-jakarta font-extrabold text-[1.15rem] text-v-ink mb-1">Job Access + Alerts</h2>
+              <p className="text-v-muted text-[13.5px]">First-mover advantage — apply before others.</p>
             </div>
-
-            <div className="mb-7">
-              <span className="font-jakarta font-extrabold text-[2.8rem] text-v-ink leading-none">£9.99</span>
-              <span className="text-v-muted text-[16px] ml-1.5">/month</span>
+            <div className="mb-6">
+              <span className="font-jakarta font-extrabold text-[2.5rem] text-v-ink leading-none">£10.99</span>
+              <span className="text-v-muted text-[15px] ml-1.5">/month</span>
             </div>
-
-            <ul className="space-y-3 mb-8 flex-1">
-              {proFeatures.map((f, i) => (
-                <li key={f} className={`flex items-start gap-2.5 text-[15px] ${i === 0 ? "font-semibold text-violet" : "text-v-ink"}`}>
+            <ul className="space-y-2.5 mb-7 flex-1">
+              {alertsFeatures.map((f, i) => (
+                <li key={f} className={`flex items-start gap-2 text-[14px] ${i === 0 ? "font-semibold text-violet" : "text-v-ink"}`}>
                   <Check /> {f}
                 </li>
               ))}
             </ul>
-
-            {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "pro" }) */}
+            {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "job-access-alerts" }) */}
             <Link
-              href="/checkout?plan=pro"
-              className="block text-center font-jakarta font-bold text-[15px] px-6 py-3.5 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200"
+              href="/checkout?plan=job-access-alerts"
+              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200"
             >
-              Go Pro
+              Get Started
+            </Link>
+          </div>
+
+          {/* Annual */}
+          <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6 flex flex-col">
+            <div className="mb-5">
+              <span className="inline-block bg-v-amber-soft text-v-amber font-jakarta font-bold text-[11px] px-3 py-1 rounded-full mb-2">Best value · save 15%</span>
+              <h2 className="font-jakarta font-extrabold text-[1.15rem] text-v-ink mb-1">Annual</h2>
+              <p className="text-v-muted text-[13.5px]">All alerts features, billed yearly.</p>
+            </div>
+            <div className="mb-6">
+              <span className="font-jakarta font-extrabold text-[2.5rem] text-v-ink leading-none">£112</span>
+              <span className="text-v-muted text-[15px] ml-1.5">/year</span>
+            </div>
+            <ul className="space-y-2.5 mb-7 flex-1">
+              {annualFeatures.map((f) => (
+                <li key={f} className="flex items-start gap-2 text-[14px] text-v-ink">
+                  <Check /> {f}
+                </li>
+              ))}
+            </ul>
+            {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "annual" }) */}
+            <Link
+              href="/checkout?plan=annual"
+              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200"
+            >
+              Get Annual
             </Link>
           </div>
         </div>
@@ -132,41 +186,51 @@ export default function PricingPage() {
       </section>
 
       {/* ── FEATURE COMPARISON ── */}
-      <section className="max-w-4xl mx-auto px-5 pb-[90px]">
+      <section className="max-w-5xl mx-auto px-5 pb-[90px]">
         <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] overflow-hidden">
-          <div className="grid grid-cols-3 gap-0 text-center">
+          <div className="grid grid-cols-4 gap-0 text-center">
             <div className="p-5 border-b border-v-line" />
             <div className="p-5 border-b border-l border-v-line">
-              <div className="font-jakarta font-bold text-[15px] text-v-ink">Job Access</div>
-              <div className="text-v-muted text-[13px]">£6.99/mo</div>
+              <div className="font-jakarta font-bold text-[14px] text-v-ink">Free</div>
+              <div className="text-v-muted text-[12px]">£0</div>
+            </div>
+            <div className="p-5 border-b border-l border-v-line">
+              <div className="font-jakarta font-bold text-[14px] text-v-ink">Job Access</div>
+              <div className="text-v-muted text-[12px]">£8.99/mo</div>
             </div>
             <div className="p-5 border-b border-l border-v-line bg-violet-tint">
-              <div className="font-jakarta font-bold text-[15px] text-violet">Pro</div>
-              <div className="text-v-muted text-[13px]">£9.99/mo</div>
+              <div className="font-jakarta font-bold text-[14px] text-violet">+ Alerts</div>
+              <div className="text-v-muted text-[12px]">£10.99/mo</div>
             </div>
           </div>
           {[
-            ["Sponsor-verified job listings", true, true],
-            ["Daily-refreshed database", true, true],
-            ["Sector & badge filters", true, true],
-            ["UK visa guidance", true, true],
-            ["Email alerts for new jobs", false, true],
-            ["AI Resume Tailoring", false, true],
-            ["Match score & gap analysis", false, true],
-            ["Priority support", false, true],
-          ].map(([label, basic, pro], i) => (
-            <div key={String(label)} className={`grid grid-cols-3 text-center ${i % 2 === 0 ? "" : "bg-[#FAFAFA]"}`}>
-              <div className="p-4 text-left text-[14px] font-medium text-v-ink border-b border-v-line pl-6">{label as string}</div>
+            ["Sponsor-verified listings", true, true, true],
+            ["Daily-refreshed database", true, true, true],
+            ["Sector & badge filters", true, true, true],
+            ["UK visa guidance", true, true, true],
+            ["Full job details & apply links", false, true, true],
+            ["Email alerts for new jobs", false, false, true],
+            ["Priority support", false, false, true],
+          ].map(([label, free, basic, pro], i) => (
+            <div key={String(label)} className={`grid grid-cols-4 text-center ${i % 2 === 0 ? "" : "bg-[#FAFAFA]"}`}>
+              <div className="p-4 text-left text-[13.5px] font-medium text-v-ink border-b border-v-line pl-6">{label as string}</div>
+              <div className="p-4 border-b border-l border-v-line flex items-center justify-center">
+                {free ? (
+                  <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                ) : (
+                  <span className="text-v-muted/40 text-lg">—</span>
+                )}
+              </div>
               <div className="p-4 border-b border-l border-v-line flex items-center justify-center">
                 {basic ? (
-                  <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 ) : (
                   <span className="text-v-muted/40 text-lg">—</span>
                 )}
               </div>
               <div className="p-4 border-b border-l border-v-line bg-violet-tint flex items-center justify-center">
                 {pro ? (
-                  <svg viewBox="0 0 20 20" fill="none" width="18" height="18"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                  <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 ) : (
                   <span className="text-v-muted/40 text-lg">—</span>
                 )}
@@ -177,7 +241,7 @@ export default function PricingPage() {
       </section>
 
       {/* ── CTA BAND ── */}
-      <section className="max-w-4xl mx-auto px-5 pb-[90px]">
+      <section className="max-w-5xl mx-auto px-5 pb-[90px]">
         <div className="relative rounded-[26px] overflow-hidden bg-gradient-to-br from-violet to-violet-2 px-10 py-16 text-center text-white">
           <div className="absolute w-[300px] h-[300px] rounded-full top-[-150px] right-[-100px] pointer-events-none" style={{ background: "rgba(255,255,255,0.12)", filter: "blur(10px)" }} />
           <h2 className="font-jakarta font-extrabold text-[clamp(1.8rem,4vw,2.6rem)] tracking-tight mb-3 relative">
@@ -189,10 +253,10 @@ export default function PricingPage() {
           </p>
           {/* TODO: Stripe Checkout — replace Link with checkout action */}
           <Link
-            href="/checkout?plan=pro"
+            href="/checkout?plan=job-access-alerts"
             className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 relative"
           >
-            Go Pro — £9.99/month →
+            Get Job Access + Alerts — £10.99/month →
           </Link>
         </div>
       </section>

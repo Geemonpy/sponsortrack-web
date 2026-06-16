@@ -72,7 +72,6 @@ export default function Nav() {
           <Link href="/#verify" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Verification</Link>
           <Link href="/#calc" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Salary check</Link>
           <Link href="/pricing" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Pricing</Link>
-          <Link href="/resume" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Resume</Link>
           <button
             onClick={openAssistant}
             className="flex items-center gap-1.5 text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors"
@@ -167,7 +166,6 @@ export default function Nav() {
               <Link href="/#verify" onClick={() => setMobileOpen(false)} className={linkCls}>Verification</Link>
               <Link href="/#calc" onClick={() => setMobileOpen(false)} className={linkCls}>Salary check</Link>
               <Link href="/pricing" onClick={() => setMobileOpen(false)} className={linkCls}>Pricing</Link>
-              <Link href="/resume" onClick={() => setMobileOpen(false)} className={linkCls}>Resume</Link>
               <button onClick={openAssistant} className={`${linkCls} w-full text-left flex items-center gap-2`}>
                 <span className="text-violet">✦</span> Ask AI
               </button>
