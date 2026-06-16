@@ -12,7 +12,7 @@ export default async function ScrapedPage() {
       <header className="border-b border-ink/10">
         <div className="max-w-5xl mx-auto px-5 py-5">
           <Link href="/" className="font-display font-extrabold text-xl tracking-tight">
-            ← SponsorTrack
+            ← SponsorRoute
           </Link>
         </div>
       </header>

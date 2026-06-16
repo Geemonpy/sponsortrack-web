@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { getRecentJobIds } from "@/lib/data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsortrack-web.vercel.app";
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsorroute.com";
   const ids = await getRecentJobIds(1000);
 
   const jobUrls: MetadataRoute.Sitemap = ids.map((id) => ({

@@ -36,7 +36,7 @@ export async function generateMetadata({
   const title = `${job.title} at ${job.company}`;
   const desc = `${job.title} at ${job.company}${
     job.location ? ` in ${job.location}` : ""
-  } — ${BADGE_META[job.badge].label}. UK visa sponsorship job on Sponsor UK.`;
+  } — ${BADGE_META[job.badge].label}. UK visa sponsorship job on SponsorRoute.`;
   return {
     title,
     description: desc,

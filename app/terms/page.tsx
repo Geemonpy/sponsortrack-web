@@ -4,7 +4,7 @@ import Nav from "@/components/landing/Nav";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Terms and conditions for using Sponsor UK.",
+  description: "Terms and conditions for using SponsorRoute.",
   alternates: { canonical: "/terms" },
 };
 
@@ -35,14 +35,14 @@ export default function TermsPage() {
 
           <Section title="1. Acceptance">
             <p>
-              By accessing or using Sponsor UK (&ldquo;the Service&rdquo;), you agree to be bound
+              By accessing or using SponsorRoute (&ldquo;the Service&rdquo;), you agree to be bound
               by these Terms. If you do not agree, please do not use the Service.
             </p>
           </Section>
 
           <Section title="2. What the Service does">
             <p>
-              Sponsor UK aggregates UK job listings from third-party sources and cross-references
+              SponsorRoute aggregates UK job listings from third-party sources and cross-references
               employers against the Home Office Register of Licensed Sponsors. We provide this
               information as a convenience to jobseekers. We are not a recruitment agency and do not
               act on behalf of any employer or applicant.
@@ -52,7 +52,7 @@ export default function TermsPage() {
           <Section title="3. No guarantee of sponsorship">
             <p>
               Appearing on the Home Office sponsor register does not mean an employer will sponsor
-              any given role. Badge labels on Sponsor UK (e.g., &ldquo;Sponsor confirmed&rdquo;)
+              any given role. Badge labels on SponsorRoute (e.g., &ldquo;Sponsor confirmed&rdquo;)
               reflect data at the time of our last check and are guidance only — not a guarantee.
               Always confirm sponsorship availability directly with the employer before applying.
             </p>
@@ -77,14 +77,14 @@ export default function TermsPage() {
           <Section title="6. Intellectual property">
             <p>
               Job listing content originates from third-party sources and remains the property of
-              its respective owners. Sponsor UK&apos;s own content, branding, and software are
+              its respective owners. SponsorRoute&apos;s own content, branding, and software are
               protected by copyright and may not be reproduced without permission.
             </p>
           </Section>
 
           <Section title="7. Limitation of liability">
             <p>
-              To the maximum extent permitted by law, Sponsor UK is not liable for any indirect,
+              To the maximum extent permitted by law, SponsorRoute is not liable for any indirect,
               incidental, or consequential damages arising from your use of the Service, including
               decisions made based on job listings or AI-generated content.
             </p>

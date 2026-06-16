@@ -19,7 +19,7 @@ interface JobContext {
 }
 
 function systemPrompt(job?: JobContext): string {
-  let base = `You are the Sponsor UK assistant, helping people who need UK visa sponsorship to find and apply for jobs.
+  let base = `You are the SponsorRoute assistant, helping people who need UK visa sponsorship to find and apply for jobs.
 
 You can help with:
 - Explaining UK work visa routes in plain English (Skilled Worker visa, Health and Care Worker visa, and what a Certificate of Sponsorship is).
@@ -41,7 +41,7 @@ The user is currently looking at this job:
 Title: ${job.title}
 Company: ${job.company ?? "Unknown"}
 Location: ${job.location ?? "Unknown"}
-Sponsorship signal on SponsorTrack: ${job.badge ?? "unknown"}
+Sponsorship signal on SponsorRoute: ${job.badge ?? "unknown"}
 Description (may be truncated): ${(job.description ?? "").slice(0, 1500)}
 
 When relevant, ground your answers in this specific role.`;

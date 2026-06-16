@@ -6,7 +6,7 @@ import Link from "next/link";
 import { getStats } from "@/lib/data";
 
 export const metadata = {
-  title: { absolute: "Sponsor UK — UK Visa Sponsor Jobs" },
+  title: { absolute: "SponsorRoute — UK Visa Sponsor Jobs" },
   description:
     "Find UK jobs from employers on the Home Office register of licensed visa sponsors. IT and care roles, checked against the official sponsor register.",
   alternates: { canonical: "/" },
@@ -385,7 +385,7 @@ export default async function HomePage() {
               <span className="w-[34px] h-[34px] rounded-[10px] bg-gradient-to-br from-violet to-violet-2 flex items-center justify-center text-white text-[18px] shadow-[0_6px_16px_rgba(91,67,232,0.4)]">
                 S
               </span>
-              Sponsor<span className="text-violet">UK</span>
+              Sponsor<span className="text-violet">Route</span>
             </Link>
             <p className="text-v-muted text-[15px] mt-3.5 max-w-[280px]">
               The UK visa-sponsorship job board that only shows employers who can actually sponsor you.
@@ -419,7 +419,7 @@ export default async function HomePage() {
           </div>
         </div>
         <div className="border-t border-v-line pt-6 flex justify-between text-v-muted text-[14px] flex-wrap gap-2.5">
-          <span>© 2026 Sponsor UK · Built in London</span>
+          <span>© 2026 SponsorRoute · Built in London</span>
           <div className="flex items-center gap-4 flex-wrap">
             <Link href="/privacy" className="hover:text-violet transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-violet transition-colors">Terms</Link>

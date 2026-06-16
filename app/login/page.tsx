@@ -85,13 +85,13 @@ function LoginForm() {
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2.5 font-jakarta font-extrabold text-[22px]">
               <span className="w-[38px] h-[38px] rounded-[11px] bg-gradient-to-br from-violet to-violet-2 flex items-center justify-center text-white text-[19px] shadow-[0_6px_16px_rgba(91,67,232,0.4)]">S</span>
-              Sponsor<span className="text-violet">UK</span>
+              Sponsor<span className="text-violet">Route</span>
             </div>
           </div>
 
           <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8">
             <h1 className="font-jakarta font-extrabold text-[1.7rem] tracking-tight text-v-ink mb-1">Sign in</h1>
-            <p className="text-v-muted text-[15px] mb-6">Welcome back to Sponsor UK.</p>
+            <p className="text-v-muted text-[15px] mb-6">Welcome back to SponsorRoute.</p>
 
             {/* Google */}
             <button

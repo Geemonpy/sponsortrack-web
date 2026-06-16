@@ -62,7 +62,7 @@ export default function Nav() {
           <span className="w-[34px] h-[34px] rounded-[10px] bg-gradient-to-br from-violet to-violet-2 flex items-center justify-center text-white text-[18px] shadow-[0_6px_16px_rgba(91,67,232,0.4)]">
             S
           </span>
-          Sponsor<span className="text-violet">UK</span>
+          Sponsor<span className="text-violet">Route</span>
         </Link>
 
         {/* Desktop links */}

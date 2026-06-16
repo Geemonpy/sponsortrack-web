@@ -4,7 +4,7 @@ import Nav from "@/components/landing/Nav";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Sponsor UK collects, uses, and protects your personal data.",
+  description: "How SponsorRoute collects, uses, and protects your personal data.",
   alternates: { canonical: "/privacy" },
 };
 
@@ -35,8 +35,8 @@ export default function PrivacyPage() {
 
           <Section title="Who we are">
             <p>
-              Sponsor UK (&ldquo;we&rdquo;, &ldquo;us&rdquo;) operates the website at{" "}
-              <strong>sponsortrack-web.vercel.app</strong>. We help jobseekers find UK roles from
+              SponsorRoute (&ldquo;we&rdquo;, &ldquo;us&rdquo;) operates the website at{" "}
+              <strong>sponsorroute.com</strong>. We help jobseekers find UK roles from
               employers on the Home Office register of licensed visa sponsors. Questions about this
               policy can be sent to{" "}
               <a href="mailto:hello@sponsoruk.com" className="text-violet hover:underline">

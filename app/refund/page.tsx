@@ -4,7 +4,7 @@ import Nav from "@/components/landing/Nav";
 
 export const metadata: Metadata = {
   title: "Refund Policy",
-  description: "Sponsor UK subscription and refund policy.",
+  description: "SponsorRoute subscription and refund policy.",
   alternates: { canonical: "/refund" },
 };
 
@@ -35,7 +35,7 @@ export default function RefundPage() {
 
           <Section title="Subscription cancellation">
             <p>
-              You may cancel your Sponsor UK subscription at any time from your account settings.
+              You may cancel your SponsorRoute subscription at any time from your account settings.
               Cancellation takes effect at the end of your current billing period — you will retain
               access until then and will not be charged again.
             </p>
@@ -65,7 +65,7 @@ export default function RefundPage() {
 
           <Section title="Free tier">
             <p>
-              Access to basic job listings on Sponsor UK is free and requires no payment. No
+              Access to basic job listings on SponsorRoute is free and requires no payment. No
               refund is applicable to the free tier.
             </p>
           </Section>

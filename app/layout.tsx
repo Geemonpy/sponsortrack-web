@@ -24,13 +24,13 @@ const jakarta = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsortrack-web.vercel.app";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://sponsorroute.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Sponsor UK — UK Visa Sponsor Jobs",
-    template: "%s | Sponsor UK",
+    default: "SponsorRoute — UK Visa Sponsor Jobs",
+    template: "%s | SponsorRoute",
   },
   description:
     "Find UK jobs from employers on the Home Office register of licensed visa sponsors. IT and care roles, checked against the official sponsor register.",
@@ -42,16 +42,16 @@ export const metadata: Metadata = {
     "tier 2 sponsorship jobs",
   ],
   openGraph: {
-    title: "Sponsor UK — UK Visa Sponsor Jobs",
+    title: "SponsorRoute — UK Visa Sponsor Jobs",
     description:
       "UK jobs from employers on the Home Office licensed sponsor register.",
-    siteName: "Sponsor UK",
+    siteName: "SponsorRoute",
     type: "website",
     images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sponsor UK — UK Visa Sponsor Jobs",
+    title: "SponsorRoute — UK Visa Sponsor Jobs",
     description: "UK jobs from employers on the Home Office licensed sponsor register.",
     images: ["/opengraph-image"],
   },
