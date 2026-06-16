@@ -1,53 +1,82 @@
-import type { Metadata } from "next";
-import Link from "next/link";
+"use client";
+
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Nav from "@/components/landing/Nav";
+import { supabaseBrowser } from "@/lib/supabaseClient";
 
-// TODO: Stripe Checkout — replace this page with a real checkout session
+function CheckoutContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const plan = searchParams.get("plan");
+  const [error, setError] = useState("");
 
-export const metadata: Metadata = {
-  title: "Checkout",
-  robots: { index: false, follow: false },
-};
+  useEffect(() => {
+    if (!plan) return;
+
+    async function fire() {
+      const { data: { session } } = await supabaseBrowser.auth.getSession();
+
+      if (!session) {
+        router.replace(`/login?next=${encodeURIComponent(`/checkout?plan=${plan}`)}`);
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/checkout", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ plan }),
+        });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          setError(data.error ?? "Something went wrong. Please try again.");
+        }
+      } catch {
+        setError("Something went wrong. Please try again.");
+      }
+    }
+
+    fire();
+  }, [plan, router]);
+
+  return (
+    <div className="flex items-center justify-center min-h-screen px-5 pt-20 pb-10">
+      <div className="w-full max-w-[400px] text-center">
+        {error ? (
+          <>
+            <p className="text-red-500 mb-4">{error}</p>
+            <button
+              onClick={() => router.push("/pricing")}
+              className="font-jakarta font-bold text-[15px] px-6 py-3 rounded-xl bg-violet text-white hover:bg-[#4a34d4] transition-all"
+            >
+              Back to pricing
+            </button>
+          </>
+        ) : (
+          <p className="text-v-muted text-[16px]">Preparing your checkout…</p>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function CheckoutPage() {
   return (
     <div className="min-h-screen bg-v-bg text-v-ink font-sans">
       <Nav />
-
-      <div className="flex items-center justify-center min-h-screen px-5 pt-20 pb-10">
-        <div className="w-full max-w-[460px] text-center">
-          <div className="inline-flex items-center justify-center w-[64px] h-[64px] rounded-[18px] bg-gradient-to-br from-violet to-violet-2 shadow-[0_10px_28px_rgba(91,67,232,0.35)] mb-6">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" width="28" height="28">
-              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-              <line x1="3" y1="6" x2="21" y2="6" />
-              <path d="M16 10a4 4 0 01-8 0" />
-            </svg>
-          </div>
-
-          <h1 className="font-jakarta font-extrabold text-[2rem] tracking-tight text-v-ink mb-3">
-            Checkout coming soon
-          </h1>
-          <p className="text-v-muted text-[16px] leading-relaxed mb-8">
-            We&apos;re setting up secure payments. In the meantime, all sponsor-checked jobs
-            are free to browse — no account needed.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link
-              href="/jobs"
-              className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 transition-all duration-200"
-            >
-              Browse jobs →
-            </Link>
-            <Link
-              href="/contact"
-              className="font-jakarta font-bold text-[15px] px-[22px] py-[11px] rounded-xl border border-v-line bg-white text-v-ink hover:border-violet hover:text-violet transition-all duration-200"
-            >
-              Contact us
-            </Link>
-          </div>
+      <Suspense fallback={
+        <div className="flex items-center justify-center min-h-screen">
+          <p className="text-v-muted text-[16px]">Loading…</p>
         </div>
-      </div>
+      }>
+        <CheckoutContent />
+      </Suspense>
     </div>
   );
 }

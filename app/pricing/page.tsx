@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Nav from "@/components/landing/Nav";
+import CheckoutButton from "@/components/CheckoutButton";
 
 export const metadata: Metadata = {
   title: "Pricing",
@@ -16,13 +17,6 @@ function Check() {
     </svg>
   );
 }
-
-const freeFeatures = [
-  "Browse all sponsor-verified job listings",
-  "Filter by sector & badge",
-  "UK visa & sponsorship guidance",
-  "Home Office register verification",
-];
 
 const jobAccessFeatures = [
   "Everything in Free",
@@ -66,32 +60,7 @@ export default function PricingPage() {
 
       {/* ── PRICING CARDS ── */}
       <section className="max-w-5xl mx-auto px-5 pb-[90px]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
-
-          {/* Free */}
-          <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6 flex flex-col">
-            <div className="mb-5">
-              <h2 className="font-jakarta font-extrabold text-[1.15rem] text-v-ink mb-1">Free</h2>
-              <p className="text-v-muted text-[13.5px]">Browse sponsor-verified jobs at no cost.</p>
-            </div>
-            <div className="mb-6">
-              <span className="font-jakarta font-extrabold text-[2.5rem] text-v-ink leading-none">£0</span>
-              <span className="text-v-muted text-[15px] ml-1.5">/forever</span>
-            </div>
-            <ul className="space-y-2.5 mb-7 flex-1">
-              {freeFeatures.map((f) => (
-                <li key={f} className="flex items-start gap-2 text-[14px] text-v-ink">
-                  <Check /> {f}
-                </li>
-              ))}
-            </ul>
-            <Link
-              href="/jobs"
-              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border border-v-line text-v-muted hover:border-violet hover:text-violet active:scale-[0.96] transition-all duration-200"
-            >
-              Browse jobs
-            </Link>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
 
           {/* Job Access */}
           <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6 flex flex-col">
@@ -110,13 +79,12 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "job-access" }) */}
-            <Link
-              href="/checkout?plan=job-access"
-              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200"
+            <CheckoutButton
+              plan="job-access"
+              className="block w-full text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200 disabled:opacity-60"
             >
               Get Job Access
-            </Link>
+            </CheckoutButton>
           </div>
 
           {/* Job Access + Alerts — Most Popular */}
@@ -141,13 +109,12 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "job-access-alerts" }) */}
-            <Link
-              href="/checkout?plan=job-access-alerts"
-              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200"
+            <CheckoutButton
+              plan="job-access-alerts"
+              className="block w-full text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl bg-violet text-white shadow-[0_10px_24px_rgba(91,67,232,0.32)] hover:bg-[#4a34d4] hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 disabled:opacity-60"
             >
               Get Started
-            </Link>
+            </CheckoutButton>
           </div>
 
           {/* Annual */}
@@ -168,13 +135,12 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            {/* TODO: Stripe Checkout — replace this Link with a call to createCheckoutSession({ plan: "annual" }) */}
-            <Link
-              href="/checkout?plan=annual"
-              className="block text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200"
+            <CheckoutButton
+              plan="annual"
+              className="block w-full text-center font-jakarta font-bold text-[14.5px] px-5 py-3 rounded-xl border-2 border-violet text-violet hover:bg-violet hover:text-white active:scale-[0.96] transition-all duration-200 disabled:opacity-60"
             >
               Get Annual
-            </Link>
+            </CheckoutButton>
           </div>
         </div>
 
@@ -188,12 +154,8 @@ export default function PricingPage() {
       {/* ── FEATURE COMPARISON ── */}
       <section className="max-w-5xl mx-auto px-5 pb-[90px]">
         <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] overflow-hidden">
-          <div className="grid grid-cols-4 gap-0 text-center">
+          <div className="grid grid-cols-3 gap-0 text-center">
             <div className="p-5 border-b border-v-line" />
-            <div className="p-5 border-b border-l border-v-line">
-              <div className="font-jakarta font-bold text-[14px] text-v-ink">Free</div>
-              <div className="text-v-muted text-[12px]">£0</div>
-            </div>
             <div className="p-5 border-b border-l border-v-line">
               <div className="font-jakarta font-bold text-[14px] text-v-ink">Job Access</div>
               <div className="text-v-muted text-[12px]">£8.99/mo</div>
@@ -204,23 +166,16 @@ export default function PricingPage() {
             </div>
           </div>
           {[
-            ["Sponsor-verified listings", true, true, true],
-            ["Daily-refreshed database", true, true, true],
-            ["Sector & badge filters", true, true, true],
-            ["UK visa guidance", true, true, true],
-            ["Full job details & apply links", false, true, true],
-            ["Email alerts for new jobs", false, false, true],
-            ["Priority support", false, false, true],
-          ].map(([label, free, basic, pro], i) => (
-            <div key={String(label)} className={`grid grid-cols-4 text-center ${i % 2 === 0 ? "" : "bg-[#FAFAFA]"}`}>
+            ["Sponsor-verified listings", true, true],
+            ["Daily-refreshed database", true, true],
+            ["Sector & badge filters", true, true],
+            ["UK visa guidance", true, true],
+            ["Full job details & apply links", true, true],
+            ["Email alerts for new jobs", false, true],
+            ["Priority support", false, true],
+          ].map(([label, basic, pro], i) => (
+            <div key={String(label)} className={`grid grid-cols-3 text-center ${i % 2 === 0 ? "" : "bg-[#FAFAFA]"}`}>
               <div className="p-4 text-left text-[13.5px] font-medium text-v-ink border-b border-v-line pl-6">{label as string}</div>
-              <div className="p-4 border-b border-l border-v-line flex items-center justify-center">
-                {free ? (
-                  <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                ) : (
-                  <span className="text-v-muted/40 text-lg">—</span>
-                )}
-              </div>
               <div className="p-4 border-b border-l border-v-line flex items-center justify-center">
                 {basic ? (
                   <svg viewBox="0 0 20 20" fill="none" width="16" height="16"><circle cx="10" cy="10" r="10" fill="#DCFCEF"/><path d="M6 10.5l2.5 2.5 5.5-5.5" stroke="#10B981" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -251,13 +206,12 @@ export default function PricingPage() {
             Every listing is cross-checked against the Home Office register before you ever see it.
             No wasted applications.
           </p>
-          {/* TODO: Stripe Checkout — replace Link with checkout action */}
-          <Link
-            href="/checkout?plan=job-access-alerts"
-            className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 relative"
+          <CheckoutButton
+            plan="job-access-alerts"
+            className="inline-flex items-center gap-2 font-jakarta font-bold text-[16px] px-8 py-4 rounded-xl bg-white text-violet hover:-translate-y-0.5 active:scale-[0.96] transition-all duration-200 relative disabled:opacity-70"
           >
             Get Job Access + Alerts — £10.99/month →
-          </Link>
+          </CheckoutButton>
         </div>
       </section>
     </div>

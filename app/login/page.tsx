@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { Suspense, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import Nav from "@/components/landing/Nav";
 import { supabaseBrowser } from "@/lib/supabaseClient";
@@ -17,8 +17,12 @@ function GoogleIcon() {
   );
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const nextPath = searchParams.get("next");
+  const safeNext = nextPath?.startsWith("/") ? nextPath : null;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -39,16 +43,19 @@ export default function LoginPage() {
         : err.message);
       setBusy(false);
     } else {
-      router.push("/");
+      router.push(safeNext ?? "/");
       router.refresh();
     }
   }
 
   async function handleGoogle() {
     setError("");
+    const redirectTo = safeNext
+      ? `${window.location.origin}${safeNext}`
+      : `${window.location.origin}/`;
     const { error: err } = await supabaseBrowser.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/` },
+      options: { redirectTo },
     });
     if (err) setError(err.message);
   }
@@ -182,5 +189,13 @@ export default function LoginPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense>
+      <LoginForm />
+    </Suspense>
   );
 }
