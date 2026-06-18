@@ -17,6 +17,10 @@ export interface Job {
   negative_keywords: string[] | null;
   posted_date: string | null;
   created_at: string | null;
+  is_skilled_worker_sponsor: boolean | null;
+  sponsor_routes: string | null;
+  sponsor_rating: string | null;
+  meets_general_threshold: string | null;
 }
 
 export interface Stats {

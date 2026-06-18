@@ -44,6 +44,25 @@ export default function JobCard({ job, back }: { job: Job; back?: string }) {
             <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${b.dotCls}`} />
             {b.label.toUpperCase()}
           </span>
+          {(job.is_skilled_worker_sponsor || job.meets_general_threshold === "meets" || job.meets_general_threshold === "below") && (
+            <span className="inline-flex flex-wrap gap-1.5 ml-1.5">
+              {job.is_skilled_worker_sponsor && (
+                <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-line text-v-muted">
+                  Skilled Worker sponsor
+                </span>
+              )}
+              {job.meets_general_threshold === "meets" && (
+                <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-green-soft text-v-green">
+                  Salary meets visa threshold
+                </span>
+              )}
+              {job.meets_general_threshold === "below" && (
+                <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-amber-soft text-v-amber">
+                  Salary below typical threshold
+                </span>
+              )}
+            </span>
+          )}
         </div>
 
         {/* Title */}

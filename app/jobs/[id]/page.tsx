@@ -227,6 +227,38 @@ export default async function JobPage({
               )}
             </div>
 
+            {/* Sponsorship checks */}
+            <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-6">
+              <h3 className="font-jakarta font-bold text-[11.5px] text-v-muted uppercase tracking-wide mb-4">Sponsorship checks</h3>
+              <div className="text-[14.5px]">
+                {job.is_skilled_worker_sponsor !== null && (
+                  <div className="flex justify-between items-baseline py-2.5 border-b border-v-line">
+                    <span className="text-v-muted">Skilled Worker route</span>
+                    <span className="font-semibold text-v-ink">{job.is_skilled_worker_sponsor ? "Yes" : "No"}</span>
+                  </div>
+                )}
+                {job.sponsor_rating && (
+                  <div className="flex justify-between items-baseline py-2.5 border-b border-v-line">
+                    <span className="text-v-muted">Sponsor rating</span>
+                    <span className="font-semibold text-v-ink">{job.sponsor_rating === "A" ? "A-rated" : job.sponsor_rating}</span>
+                  </div>
+                )}
+                <div className="flex justify-between items-baseline py-2.5">
+                  <span className="text-v-muted">Salary</span>
+                  <span className={`font-semibold text-right ml-4 ${job.meets_general_threshold === "meets" ? "text-v-green" : job.meets_general_threshold === "below" ? "text-v-amber" : "text-v-muted"}`}>
+                    {job.meets_general_threshold === "meets"
+                      ? "Meets the visa salary threshold"
+                      : job.meets_general_threshold === "below"
+                      ? "Below the typical threshold"
+                      : "Not listed"}
+                  </span>
+                </div>
+              </div>
+              <p className="mt-3 pt-3 border-t border-v-line text-[12px] text-v-muted leading-relaxed">
+                Care and health roles have lower salary thresholds, and advertised salaries are sometimes estimated — always confirm with the employer.
+              </p>
+            </div>
+
             {/* Sponsorship note */}
             <div className="bg-violet-tint border border-violet-soft rounded-[16px] p-5 text-[13.5px] text-v-muted leading-relaxed">
               <strong className="text-v-ink font-semibold block mb-1">About this badge</strong>
