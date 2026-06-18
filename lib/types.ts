@@ -38,4 +38,5 @@ export interface JobFilters {
   search?: string;
   limit?: number;
   sourceType?: "main" | "test";
+  salaryThreshold?: boolean;
 }

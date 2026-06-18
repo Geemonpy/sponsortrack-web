@@ -60,6 +60,8 @@ export default function JobBoard({
   const [search, setSearch] = useState(initialSearch);
   const [page, setPage] = useState(() => Math.max(1, Number(searchParams.get("page") || 1)));
 
+  const [salaryThreshold, setSalaryThreshold] = useState(false);
+
   const [email, setEmail] = useState("");
   const [alertMsg, setAlertMsg] = useState("");
   const [honeypot, setHoneypot] = useState("");
@@ -77,7 +79,7 @@ export default function JobBoard({
     params.delete("page");
     const qs = params.toString();
     router.replace(`/jobs${qs ? `?${qs}` : ""}`, { scroll: false });
-  }, [category, badge, days, location, search, includeUnconfirmed, router]);
+  }, [category, badge, days, location, search, includeUnconfirmed, salaryThreshold, router]);
 
   const fetchJobs = useCallback(async () => {
     setLoading(true);
@@ -87,6 +89,7 @@ export default function JobBoard({
     if (days) params.set("days", days);
     if (location) params.set("location", location);
     if (search) params.set("search", search);
+    if (salaryThreshold) params.set("salaryThreshold", "1");
     try {
       const { data: { session } } = await supabaseBrowser.auth.getSession();
       const headers: HeadersInit = {};
@@ -105,7 +108,7 @@ export default function JobBoard({
     } finally {
       setLoading(false);
     }
-  }, [category, badge, days, location, search]);
+  }, [category, badge, days, location, search, salaryThreshold]);
 
   useEffect(() => {
     const t = setTimeout(fetchJobs, 350);
@@ -154,7 +157,7 @@ export default function JobBoard({
 
   // Default view: sponsor_confirmed + licensed_sponsor only.
   // "Include unconfirmed" toggle adds sponsorship_mentioned (employer not on register).
-  const filteredJobs =
+  const withBadge =
     badge !== ""
       ? jobs
       : includeUnconfirmed
@@ -162,6 +165,9 @@ export default function JobBoard({
       : jobs.filter(
           (j) => j.badge === "sponsor_confirmed" || j.badge === "licensed_sponsor"
         );
+  const filteredJobs = salaryThreshold
+    ? withBadge.filter((j) => j.meets_general_threshold === "meets")
+    : withBadge;
 
   const visibleJobs = filteredJobs.slice(0, page * PAGE_SIZE);
   const hasMore = visibleJobs.length < filteredJobs.length;
@@ -258,6 +264,17 @@ export default function JobBoard({
               className="rounded accent-violet"
             />
             Include unconfirmed
+          </label>
+
+          {/* Salary threshold */}
+          <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={salaryThreshold}
+              onChange={(e) => guardFilter(() => setSalaryThreshold(e.target.checked))}
+              className="rounded accent-violet"
+            />
+            Salary meets threshold
           </label>
 
           {/* Days filter */}

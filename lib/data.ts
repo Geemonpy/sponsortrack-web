@@ -20,6 +20,7 @@ export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
     if (filters.search) {
       q = q.or(`title.ilike.%${filters.search}%,company.ilike.%${filters.search}%`);
     }
+    if (filters.salaryThreshold) q = q.eq("meets_general_threshold", "meets");
 
     q = q.order("posted_date", { ascending: false }).limit(filters.limit ?? 200);
 

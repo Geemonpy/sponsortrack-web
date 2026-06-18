@@ -64,6 +64,7 @@ export async function GET(req: NextRequest) {
       location: sp.get("location") || undefined,
       search: sp.get("search") || undefined,
       days: daysRaw ? Number(daysRaw) : undefined,
+      salaryThreshold: sp.get("salaryThreshold") === "1" || undefined,
       limit: 200,
       sourceType: "main",
     });
