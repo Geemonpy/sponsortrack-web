@@ -87,6 +87,9 @@ export default function Nav() {
               >
                 {(user.email ?? "?")[0].toUpperCase()}
               </div>
+              <Link href="/alerts" className="text-[14px] text-v-muted font-medium hover:text-v-ink transition-colors">
+                Alert prefs
+              </Link>
               <button
                 onClick={signOut}
                 className="text-[14px] text-v-muted font-medium hover:text-v-ink transition-colors"
@@ -173,11 +176,20 @@ export default function Nav() {
               <div className="border-t border-v-line my-3" />
 
               {user ? (
-                <div className="flex items-center justify-between">
-                  <span className="text-[14px] text-v-muted truncate">{user.email}</span>
-                  <button onClick={signOut} className="text-[14px] text-violet font-semibold ml-4 shrink-0">
-                    Sign out
-                  </button>
+                <div>
+                  <span className="block text-[13px] text-v-muted truncate mb-2">{user.email}</span>
+                  <div className="flex items-center gap-4">
+                    <Link
+                      href="/alerts"
+                      onClick={() => setMobileOpen(false)}
+                      className="text-[14px] text-violet font-semibold"
+                    >
+                      Alert prefs
+                    </Link>
+                    <button onClick={signOut} className="text-[14px] text-v-muted font-medium hover:text-v-ink transition-colors">
+                      Sign out
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <Link href="/login" onClick={() => setMobileOpen(false)} className="block text-[16px] font-semibold text-violet py-2">
