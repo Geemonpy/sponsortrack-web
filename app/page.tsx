@@ -120,7 +120,7 @@ const steps = [
     ),
   },
   {
-    title: "4. Get sponsored",
+    title: "4. Apply with confidence",
     desc: "Take the real next step toward your UK career.",
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="30" height="30">
@@ -166,13 +166,14 @@ export default async function HomePage() {
           {/* Left */}
           <div>
             <div className="inline-flex items-center gap-[9px] bg-white border border-v-line shadow-[0_14px_44px_rgba(28,20,64,.07)] px-4 py-[9px] rounded-full text-[14px] font-semibold text-violet mb-[26px]">
-              <span className="text-violet-2">✦</span> Verified sponsors only. No dead ends.
+              <span className="text-violet-2">✦</span> Verified licensed sponsors. Fewer wasted applications.
             </div>
             <h1
               className="font-jakarta font-extrabold tracking-[-0.02em] leading-[1.05] text-[clamp(2.8rem,6.4vw,4.9rem)]"
             >
               Find UK jobs<br />
-              that <span className="text-violet">sponsor</span><br />
+              from employers<br />
+              who can <span className="text-violet">sponsor</span><br />
               <span className="text-violet">your visa.</span>
             </h1>
             <p className="text-v-muted text-[19px] max-w-[430px] mt-[26px] mb-[34px]">
@@ -210,7 +211,7 @@ export default async function HomePage() {
                 ["125,222", "licensed sponsors"],
                 ["5", "sectors covered"],
                 ["Daily", "updates"],
-                ["0", "dead-end applications"],
+                ["100%", "sponsor-checked listings"],
               ].map(([val, label]) => (
                 <div key={label} className="flex items-center gap-2">
                   <b className="text-violet font-jakarta">{val}</b> {label}
@@ -312,6 +313,12 @@ export default async function HomePage() {
             </Reveal>
           ))}
         </div>
+        <Reveal delay={0.2}>
+          <div className="mt-8 bg-violet-tint border border-violet/20 rounded-[14px] px-6 py-4 text-[14px] text-v-muted text-center max-w-[740px] mx-auto space-y-1.5">
+            <p><strong className="text-v-ink">Important:</strong> SponsorRoute checks employers against sponsor licence data, but sponsorship is not guaranteed. Always confirm directly with the employer before applying.</p>
+            <p>SponsorRoute is not an immigration adviser and does not provide legal or immigration advice.</p>
+          </div>
+        </Reveal>
       </section>
 
       {/* ── SALARY CALCULATOR ── */}
@@ -362,7 +369,7 @@ export default async function HomePage() {
               style={{ background: "rgba(255,255,255,0.12)", filter: "blur(10px)" }}
             />
             <h2 className="font-jakarta font-extrabold tracking-[-0.02em] leading-[1.05] text-[clamp(2rem,5vw,3.4rem)] relative">
-              Stop applying into the void.
+              Apply where sponsorship is actually on the table.
             </h2>
             <p className="opacity-90 mt-4 mb-[30px] max-w-[520px] mx-auto relative">
               Browse jobs from employers who can actually sponsor your UK visa — verified, every day.
@@ -388,7 +395,7 @@ export default async function HomePage() {
               Sponsor<span className="text-violet">Route</span>
             </Link>
             <p className="text-v-muted text-[15px] mt-3.5 max-w-[280px]">
-              The UK visa-sponsorship job board that only shows employers who can actually sponsor you.
+              The UK visa-sponsorship job board that checks every employer against the official licensed-sponsor register.
             </p>
           </div>
           <div>
@@ -418,12 +425,17 @@ export default async function HomePage() {
             <span className="block text-v-muted text-[15px] mb-2.5">Source: Adzuna</span>
           </div>
         </div>
+        <div className="border-t border-v-line pt-5 pb-4 text-[12.5px] text-v-muted/70 space-y-1">
+          <p>SponsorRoute checks employers against sponsor licence data, but sponsorship is not guaranteed. Always confirm directly with the employer before applying.</p>
+          <p>SponsorRoute is not an immigration adviser and does not provide legal or immigration advice.</p>
+        </div>
         <div className="border-t border-v-line pt-6 flex justify-between text-v-muted text-[14px] flex-wrap gap-2.5">
           <span>© 2026 SponsorRoute · Built in London</span>
           <div className="flex items-center gap-4 flex-wrap">
             <Link href="/privacy" className="hover:text-violet transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-violet transition-colors">Terms</Link>
             <Link href="/refund" className="hover:text-violet transition-colors">Refunds</Link>
+            <Link href="/cookies" className="hover:text-violet transition-colors">Cookies</Link>
             <span>Verified against the Home Office Register of Licensed Sponsors</span>
           </div>
         </div>

@@ -107,17 +107,18 @@ export default function TermsPage() {
           <Section title="10. Contact">
             <p>
               For any questions about these Terms, contact us at{" "}
-              <a href="mailto:hello@sponsoruk.com" className="text-violet hover:underline">
-                hello@sponsoruk.com
+              <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">
+                support@sponsorroute.com
               </a>
               .
             </p>
           </Section>
         </div>
 
-        <div className="mt-8 flex gap-6 text-[14px] text-v-muted">
+        <div className="mt-8 flex gap-6 text-[14px] text-v-muted flex-wrap">
           <Link href="/privacy" className="hover:text-violet transition-colors">Privacy Policy</Link>
           <Link href="/refund" className="hover:text-violet transition-colors">Refund Policy</Link>
+          <Link href="/cookies" className="hover:text-violet transition-colors">Cookies</Link>
           <Link href="/contact" className="hover:text-violet transition-colors">Contact</Link>
         </div>
       </div>

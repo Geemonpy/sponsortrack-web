@@ -105,7 +105,7 @@ export default function Assistant() {
           {/* Header */}
           <div className="bg-gradient-to-r from-violet to-violet-2 px-5 py-4">
             <div className="font-jakarta font-bold text-[17px] text-white leading-tight">Visa &amp; CV assistant</div>
-            <div className="text-[12px] text-white/75 mt-0.5">UK sponsorship help · not legal advice</div>
+            <div className="text-[12px] text-white/75 mt-0.5">General information only — not immigration advice.</div>
           </div>
 
           {/* Error banner */}

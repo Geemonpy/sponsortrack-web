@@ -38,8 +38,8 @@ export default function ContactPage() {
                   </svg>
                 ),
                 label: "Email",
-                value: "hello@sponsoruk.com",
-                href: "mailto:hello@sponsoruk.com",
+                value: "support@sponsorroute.com",
+                href: "mailto:support@sponsorroute.com",
               },
               {
                 icon: (

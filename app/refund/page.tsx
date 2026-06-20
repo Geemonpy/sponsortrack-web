@@ -56,8 +56,8 @@ export default function RefundPage() {
             </ul>
             <p>
               If you believe you qualify for a refund, contact us within 14 days of the charge at{" "}
-              <a href="mailto:hello@sponsoruk.com" className="text-violet hover:underline">
-                hello@sponsoruk.com
+              <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">
+                support@sponsorroute.com
               </a>{" "}
               with your account email and a brief explanation. We aim to respond within 3 business days.
             </p>
@@ -73,17 +73,18 @@ export default function RefundPage() {
           <Section title="Questions">
             <p>
               For billing questions or disputes, contact us at{" "}
-              <a href="mailto:hello@sponsoruk.com" className="text-violet hover:underline">
-                hello@sponsoruk.com
+              <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">
+                support@sponsorroute.com
               </a>
               .
             </p>
           </Section>
         </div>
 
-        <div className="mt-8 flex gap-6 text-[14px] text-v-muted">
+        <div className="mt-8 flex gap-6 text-[14px] text-v-muted flex-wrap">
           <Link href="/privacy" className="hover:text-violet transition-colors">Privacy Policy</Link>
           <Link href="/terms" className="hover:text-violet transition-colors">Terms of Service</Link>
+          <Link href="/cookies" className="hover:text-violet transition-colors">Cookies</Link>
           <Link href="/contact" className="hover:text-violet transition-colors">Contact</Link>
         </div>
       </div>

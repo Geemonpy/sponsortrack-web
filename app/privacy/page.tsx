@@ -39,8 +39,8 @@ export default function PrivacyPage() {
               <strong>sponsorroute.com</strong>. We help jobseekers find UK roles from
               employers on the Home Office register of licensed visa sponsors. Questions about this
               policy can be sent to{" "}
-              <a href="mailto:hello@sponsoruk.com" className="text-violet hover:underline">
-                hello@sponsoruk.com
+              <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">
+                support@sponsorroute.com
               </a>
               .
             </p>
@@ -58,10 +58,13 @@ export default function PrivacyPage() {
               behavioural profiles.
             </p>
             <p>
-              <strong className="text-v-ink">AI tool input</strong> — when you use the Resume
-              Tailoring tool, the CV text and job description you paste are sent to Anthropic&apos;s
-              API to generate a response. We do not store these inputs beyond the duration of your
-              session.
+              <strong className="text-v-ink">AI tool input</strong> — two features send data to
+              Anthropic&apos;s API: (1) the <em>Resume Tailoring</em> tool sends your CV text and
+              the job description you paste; (2) the <em>AI chat assistant</em> sends your chat
+              messages (up to the last 10 turns) and, when you are viewing a specific job listing,
+              the job title, employer name, location, and a portion of the job description. Neither
+              input is stored by SponsorRoute beyond the duration of your request. Anthropic&apos;s
+              API policy does not train on API inputs.
             </p>
             <p>
               <strong className="text-v-ink">Cookies</strong> — we use a session cookie for
@@ -111,8 +114,8 @@ export default function PrivacyPage() {
             </ul>
             <p>
               To exercise any of these rights, email{" "}
-              <a href="mailto:hello@sponsoruk.com" className="text-violet hover:underline">
-                hello@sponsoruk.com
+              <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">
+                support@sponsorroute.com
               </a>
               . We will respond within 30 days.
             </p>
@@ -133,9 +136,10 @@ export default function PrivacyPage() {
           </Section>
         </div>
 
-        <div className="mt-8 flex gap-6 text-[14px] text-v-muted">
+        <div className="mt-8 flex gap-6 text-[14px] text-v-muted flex-wrap">
           <Link href="/terms" className="hover:text-violet transition-colors">Terms of Service</Link>
           <Link href="/refund" className="hover:text-violet transition-colors">Refund Policy</Link>
+          <Link href="/cookies" className="hover:text-violet transition-colors">Cookies</Link>
           <Link href="/contact" className="hover:text-violet transition-colors">Contact</Link>
         </div>
       </div>

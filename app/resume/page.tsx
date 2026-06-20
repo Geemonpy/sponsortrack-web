@@ -127,6 +127,9 @@ export default function ResumePage() {
           Paste your CV and a job description. The AI analyses your match, spots gaps, and rewrites
           your CV to give this specific role the best possible shot.
         </p>
+        <p className="mt-3 text-[13px] text-v-muted/70 max-w-[560px]">
+          General information only — not immigration advice.
+        </p>
       </section>
 
       {/* ── INPUT FORM ── */}
