@@ -28,10 +28,17 @@ export default function RefundPage() {
           <h1 className="font-jakarta font-extrabold tracking-tight text-[2.2rem] text-v-ink mb-2">
             Refund Policy
           </h1>
-          <p className="text-v-muted text-[15px]">Last updated: 14 June 2026</p>
+          <p className="text-v-muted text-[15px]">Last updated: 21 June 2026</p>
         </div>
 
         <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8 md:p-10">
+
+          <Section title="Immediate access to digital content">
+            <p>
+              By purchasing, you agree that access begins immediately, and you acknowledge that you
+              therefore lose the standard 14-day right to cancel digital content once access has begun.
+            </p>
+          </Section>
 
           <Section title="Subscription cancellation">
             <p>
@@ -54,6 +61,10 @@ export default function RefundPage() {
               <li>Technical failures that prevented access for a significant portion of the billing period</li>
               <li>Charges made in error</li>
             </ul>
+            <p>
+              Where a refund is due, we will process it without undue delay and within 14 days of
+              agreeing it.
+            </p>
             <p>
               If you believe you qualify for a refund, contact us within 14 days of the charge at{" "}
               <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">

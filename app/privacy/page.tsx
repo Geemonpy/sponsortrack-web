@@ -28,7 +28,7 @@ export default function PrivacyPage() {
           <h1 className="font-jakarta font-extrabold tracking-tight text-[2.2rem] text-v-ink mb-2">
             Privacy Policy
           </h1>
-          <p className="text-v-muted text-[15px]">Last updated: 14 June 2026</p>
+          <p className="text-v-muted text-[15px]">Last updated: 21 June 2026</p>
         </div>
 
         <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8 md:p-10">
@@ -43,6 +43,10 @@ export default function PrivacyPage() {
                 support@sponsorroute.com
               </a>
               .
+            </p>
+            <p>
+              SponsorRoute is operated by Geemon Palissery Yesudas (sole trader), 2 Scarbrook Road,
+              Croydon, CR0 1FN, United Kingdom. We are the data controller for your personal data.
             </p>
           </Section>
 
@@ -94,7 +98,16 @@ export default function PrivacyPage() {
               </li>
               <li>
                 <strong className="text-v-ink">Anthropic</strong> — AI processing for the Resume
-                Tailoring tool (no training on your inputs per Anthropic&apos;s API policy)
+                Tailoring tool and the AI chat assistant (no training on your inputs per
+                Anthropic&apos;s API policy)
+              </li>
+              <li>
+                <strong className="text-v-ink">Stripe</strong> — payment processing (we receive
+                payment confirmation and subscription status; we do not store your card details)
+              </li>
+              <li>
+                <strong className="text-v-ink">Resend</strong> — sending the job-alert emails you
+                subscribe to
               </li>
               <li>
                 <strong className="text-v-ink">Vercel</strong> — website hosting (data may transit

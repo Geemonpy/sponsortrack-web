@@ -28,7 +28,7 @@ export default function TermsPage() {
           <h1 className="font-jakarta font-extrabold tracking-tight text-[2.2rem] text-v-ink mb-2">
             Terms of Service
           </h1>
-          <p className="text-v-muted text-[15px]">Last updated: 14 June 2026</p>
+          <p className="text-v-muted text-[15px]">Last updated: 21 June 2026</p>
         </div>
 
         <div className="bg-white border border-v-line rounded-[22px] shadow-[0_14px_44px_rgba(28,20,64,.07)] p-8 md:p-10">
@@ -37,6 +37,10 @@ export default function TermsPage() {
             <p>
               By accessing or using SponsorRoute (&ldquo;the Service&rdquo;), you agree to be bound
               by these Terms. If you do not agree, please do not use the Service.
+            </p>
+            <p>
+              SponsorRoute is operated by Geemon Palissery Yesudas (sole trader), 2 Scarbrook Road,
+              Croydon, CR0 1FN.
             </p>
           </Section>
 
@@ -97,14 +101,30 @@ export default function TermsPage() {
             </p>
           </Section>
 
-          <Section title="9. Governing law">
+          <Section title="9. Payments and subscriptions">
+            <p>
+              Paid plans are billed via Stripe. Subscriptions auto-renew each billing period until
+              cancelled. You can cancel at any time from your account and will retain access until
+              the end of the current period. Refunds are governed by our{" "}
+              <Link href="/refund" className="text-violet hover:underline">Refund Policy</Link>.
+            </p>
+          </Section>
+
+          <Section title="10. No immigration advice">
+            <p>
+              SponsorRoute is not an immigration adviser and does not provide legal or immigration
+              advice. Any information provided is general information only.
+            </p>
+          </Section>
+
+          <Section title="11. Governing law">
             <p>
               These Terms are governed by the laws of England and Wales. Any disputes shall be
               subject to the exclusive jurisdiction of the courts of England and Wales.
             </p>
           </Section>
 
-          <Section title="10. Contact">
+          <Section title="12. Contact">
             <p>
               For any questions about these Terms, contact us at{" "}
               <a href="mailto:support@sponsorroute.com" className="text-violet hover:underline">
