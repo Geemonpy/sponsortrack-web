@@ -18,6 +18,11 @@ const BADGES: Record<Badge, { label: string; pillCls: string; dotCls: string }> 
     pillCls: "bg-v-amber-soft text-v-amber",
     dotCls: "bg-v-amber",
   },
+  sponsor_not_verified: {
+    label: "Sponsor not verified",
+    pillCls: "bg-v-line text-v-muted",
+    dotCls: "bg-v-muted",
+  },
 };
 
 function timeAgo(dateStr: string | null): string {

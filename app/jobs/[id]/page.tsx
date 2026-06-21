@@ -24,6 +24,11 @@ const BADGE_META: Record<Badge, { label: string; pillClass: string; dotClass: st
     pillClass: "bg-v-amber-soft text-v-amber",
     dotClass: "bg-v-amber",
   },
+  sponsor_not_verified: {
+    label: "Sponsor not verified",
+    pillClass: "bg-v-line text-v-muted",
+    dotClass: "bg-v-muted",
+  },
 };
 
 export async function generateMetadata({

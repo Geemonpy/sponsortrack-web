@@ -1,4 +1,4 @@
-export type Badge = "sponsor_confirmed" | "licensed_sponsor" | "sponsorship_mentioned";
+export type Badge = "sponsor_confirmed" | "licensed_sponsor" | "sponsorship_mentioned" | "sponsor_not_verified";
 
 export interface Job {
   id: string;

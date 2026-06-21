@@ -52,6 +52,7 @@ export default function JobBoard({
 
   const [jobs, setJobs] = useState<Job[]>(initialJobs);
   const [loading, setLoading] = useState(false);
+  const [viewMode, setViewMode] = useState<"verified" | "unverified">("verified");
   const [category, setCategory] = useState(initialCategory);
   const [badge, setBadge] = useState("");
   const [includeUnconfirmed, setIncludeUnconfirmed] = useState(false);
@@ -79,13 +80,17 @@ export default function JobBoard({
     params.delete("page");
     const qs = params.toString();
     router.replace(`/jobs${qs ? `?${qs}` : ""}`, { scroll: false });
-  }, [category, badge, days, location, search, includeUnconfirmed, salaryThreshold, router]);
+  }, [category, badge, days, location, search, includeUnconfirmed, salaryThreshold, viewMode, router]);
 
   const fetchJobs = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams();
     if (category && category !== "graduate") params.set("category", category);
-    if (badge) params.set("badge", badge);
+    if (viewMode === "unverified") {
+      params.set("badge", "sponsor_not_verified");
+    } else if (badge) {
+      params.set("badge", badge);
+    }
     if (days) params.set("days", days);
     if (location) params.set("location", location);
     if (search) params.set("search", search);
@@ -108,7 +113,7 @@ export default function JobBoard({
     } finally {
       setLoading(false);
     }
-  }, [category, badge, days, location, search, salaryThreshold]);
+  }, [category, badge, days, location, search, salaryThreshold, viewMode]);
 
   useEffect(() => {
     const t = setTimeout(fetchJobs, 350);
@@ -155,13 +160,15 @@ export default function JobBoard({
     { n: stats.today, l: "New today" },
   ];
 
-  // Default view: sponsor_confirmed + licensed_sponsor only.
-  // "Include unconfirmed" toggle adds sponsorship_mentioned (employer not on register).
+  // Unverified tab: server already filtered to sponsor_not_verified, show all.
+  // Verified tab: sponsor_not_verified is never shown, regardless of other filters.
   const withBadge =
-    badge !== ""
+    viewMode === "unverified"
       ? jobs
+      : badge !== ""
+      ? jobs.filter((j) => j.badge !== "sponsor_not_verified")
       : includeUnconfirmed
-      ? jobs
+      ? jobs.filter((j) => j.badge !== "sponsor_not_verified")
       : jobs.filter(
           (j) => j.badge === "sponsor_confirmed" || j.badge === "licensed_sponsor"
         );
@@ -221,6 +228,30 @@ export default function JobBoard({
 
       {/* ── FILTER BAR ── */}
       <section className="max-w-5xl mx-auto px-5 sticky top-0 z-10 bg-v-bg/95 backdrop-blur-sm py-4 border-y border-v-line">
+        {/* View mode tabs */}
+        <div className="flex gap-1.5 p-1 bg-v-line/60 rounded-full w-fit mb-3">
+          <button
+            onClick={() => setViewMode("verified")}
+            className={`px-4 py-1.5 text-[13.5px] font-jakarta font-semibold rounded-full transition-all duration-200 ${
+              viewMode === "verified"
+                ? "bg-white shadow text-violet"
+                : "text-v-muted hover:text-v-ink"
+            }`}
+          >
+            Verified sponsor jobs
+          </button>
+          <button
+            onClick={() => setViewMode("unverified")}
+            className={`px-4 py-1.5 text-[13.5px] font-jakarta font-semibold rounded-full transition-all duration-200 ${
+              viewMode === "unverified"
+                ? "bg-white shadow text-v-muted"
+                : "text-v-muted hover:text-v-ink"
+            }`}
+          >
+            Other UK jobs · sponsor not verified
+          </button>
+        </div>
+
         <div className="flex flex-wrap items-center gap-2">
           {/* Category tabs */}
           <div className="flex gap-1.5 p-1 bg-v-line/60 rounded-full">
@@ -244,27 +275,31 @@ export default function JobBoard({
 
           <div className="flex-1" />
 
-          {/* Badge filter */}
-          <select
-            className={controlCls}
-            value={badge}
-            onChange={(e) => guardFilter(() => setBadge(e.target.value))}
-          >
-            <option value="">All sponsor-safe jobs</option>
-            <option value="licensed_sponsor">Licensed sponsor employer</option>
-            <option value="sponsorship_mentioned">Sponsorship mentioned</option>
-          </select>
+          {/* Badge filter — only in verified mode */}
+          {viewMode === "verified" && (
+            <select
+              className={controlCls}
+              value={badge}
+              onChange={(e) => guardFilter(() => setBadge(e.target.value))}
+            >
+              <option value="">All sponsor-safe jobs</option>
+              <option value="licensed_sponsor">Licensed sponsor employer</option>
+              <option value="sponsorship_mentioned">Sponsorship mentioned</option>
+            </select>
+          )}
 
-          {/* Include unconfirmed */}
-          <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={includeUnconfirmed}
-              onChange={(e) => guardFilter(() => setIncludeUnconfirmed(e.target.checked))}
-              className="rounded accent-violet"
-            />
-            Include unconfirmed
-          </label>
+          {/* Include unconfirmed — only in verified mode */}
+          {viewMode === "verified" && (
+            <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={includeUnconfirmed}
+                onChange={(e) => guardFilter(() => setIncludeUnconfirmed(e.target.checked))}
+                className="rounded accent-violet"
+              />
+              Include unconfirmed
+            </label>
+          )}
 
           {/* Salary threshold */}
           <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
@@ -320,6 +355,19 @@ export default function JobBoard({
           It does not guarantee sponsorship for this exact role.
         </p>
       </section>
+
+      {/* ── UNVERIFIED WARNING ── */}
+      {viewMode === "unverified" && (
+        <div className="max-w-5xl mx-auto px-5 pt-5 pb-0">
+          <div className="rounded-[14px] bg-v-amber-soft border border-v-amber/30 px-4 py-3.5 flex items-start gap-3 text-[13.5px] leading-snug text-v-ink">
+            <span className="text-v-amber font-bold text-[17px] leading-none mt-0.5 shrink-0">⚠</span>
+            <span>
+              <strong className="font-semibold">These employers are NOT confirmed on the Home Office licensed sponsor register.</strong>{" "}
+              Listings may mention sponsorship, but we cannot verify the employer&apos;s sponsor status. Always confirm directly with the employer before applying.
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* ── RESULTS ── */}
       <main className="max-w-5xl mx-auto px-5 py-6">
