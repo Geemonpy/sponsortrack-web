@@ -91,6 +91,7 @@ export default function JobBoard({
     } else if (badge) {
       params.set("badge", badge);
     }
+    if (viewMode === "verified" && includeUnconfirmed) params.set("includeUnconfirmed", "1");
     if (days) params.set("days", days);
     if (location) params.set("location", location);
     if (search) params.set("search", search);
@@ -160,18 +161,8 @@ export default function JobBoard({
     { n: stats.today, l: "New today" },
   ];
 
-  // Unverified tab: server already filtered to sponsor_not_verified, show all.
-  // Verified tab: sponsor_not_verified is never shown, regardless of other filters.
-  const withBadge =
-    viewMode === "unverified"
-      ? jobs
-      : badge !== ""
-      ? jobs.filter((j) => j.badge !== "sponsor_not_verified")
-      : includeUnconfirmed
-      ? jobs.filter((j) => j.badge !== "sponsor_not_verified")
-      : jobs.filter(
-          (j) => j.badge === "sponsor_confirmed" || j.badge === "licensed_sponsor"
-        );
+  // Badge filtering is now done server-side; jobs already contain the correct set.
+  const withBadge = jobs;
   const filteredJobs = salaryThreshold
     ? withBadge.filter((j) => j.meets_general_threshold === "meets")
     : withBadge;

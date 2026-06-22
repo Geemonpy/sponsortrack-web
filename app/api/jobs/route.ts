@@ -55,11 +55,28 @@ export async function GET(req: NextRequest) {
   }
 
   const sp = req.nextUrl.searchParams;
+  const badgeParam = sp.get("badge") || "";
+  const includeUnconfirmed = sp.get("includeUnconfirmed") === "1";
+
+  // Resolve badge filter server-side so the 200-row limit applies to the correct set.
+  // - Specific badge (incl. "sponsor_not_verified" for the unverified tab): use as-is.
+  // - Default verified view: sponsor_confirmed + licensed_sponsor.
+  // - Verified + includeUnconfirmed: everything except sponsor_not_verified.
+  let badgeFilter: string | undefined;
+  let badgesFilter: string[] | undefined;
+  if (badgeParam) {
+    badgeFilter = badgeParam;
+  } else if (includeUnconfirmed) {
+    badgesFilter = ["sponsor_confirmed", "licensed_sponsor", "sponsorship_mentioned"];
+  } else {
+    badgesFilter = ["sponsor_confirmed", "licensed_sponsor"];
+  }
 
   if (isSubscriber) {
     const daysRaw = sp.get("days");
     const jobs = await getJobs({
-      badge: sp.get("badge") || undefined,
+      badge: badgeFilter,
+      badges: badgesFilter,
       category: sp.get("category") || undefined,
       location: sp.get("location") || undefined,
       search: sp.get("search") || undefined,
@@ -71,7 +88,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ count: jobs.length, jobs, capped: false });
   }
 
-  // Free / unauthenticated: 20 most-recent verified jobs, no filters applied
-  const jobs = await getJobs({ limit: 20, sourceType: "main" });
+  // Free / unauthenticated: 20 most-recent verified jobs (default badge filter applied)
+  const jobs = await getJobs({ badges: ["sponsor_confirmed", "licensed_sponsor"], limit: 20, sourceType: "main" });
   return NextResponse.json({ count: jobs.length, jobs, capped: true });
 }

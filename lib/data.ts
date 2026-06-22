@@ -8,7 +8,11 @@ export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
   try {
     let q = supabase.from("jobs").select("*");
 
-    if (filters.badge) q = q.eq("badge", filters.badge);
+    if (filters.badges && filters.badges.length > 0) {
+      q = q.in("badge", filters.badges);
+    } else if (filters.badge) {
+      q = q.eq("badge", filters.badge);
+    }
     if (filters.category) q = q.eq("category", filters.category);
     if (filters.location) q = q.ilike("location", `%${filters.location}%`);
     if (filters.days) {
@@ -67,15 +71,18 @@ export async function getJob(id: string): Promise<Job | null> {
   }
 }
 
+// Matches the sourceType:"main" filter in getJobs: source IS NULL or one of MAIN_SOURCES.
+const MAIN_SOURCE_OR = `source.is.null,source.eq.Adzuna,source.eq.Active Jobs DB`;
+
 export async function getStats(): Promise<Stats> {
   const empty: Stats = { total: 0, sponsor_confirmed: 0, licensed_sponsor: 0, today: 0 };
   try {
     const today = new Date().toISOString().slice(0, 10);
     const [totalRes, confirmedRes, licensedRes, todayRes] = await Promise.all([
-      supabase.from("jobs").select("id", { count: "exact", head: true }),
-      supabase.from("jobs").select("id", { count: "exact", head: true }).eq("badge", "sponsor_confirmed"),
-      supabase.from("jobs").select("id", { count: "exact", head: true }).eq("badge", "licensed_sponsor"),
-      supabase.from("jobs").select("id", { count: "exact", head: true }).gte("posted_date", today),
+      supabase.from("jobs").select("id", { count: "exact", head: true }).or(MAIN_SOURCE_OR),
+      supabase.from("jobs").select("id", { count: "exact", head: true }).eq("badge", "sponsor_confirmed").or(MAIN_SOURCE_OR),
+      supabase.from("jobs").select("id", { count: "exact", head: true }).eq("badge", "licensed_sponsor").or(MAIN_SOURCE_OR),
+      supabase.from("jobs").select("id", { count: "exact", head: true }).gte("posted_date", today).or(MAIN_SOURCE_OR),
     ]);
     return {
       total: totalRes.count ?? 0,

@@ -32,6 +32,7 @@ export interface Stats {
 
 export interface JobFilters {
   badge?: string;
+  badges?: string[];
   category?: string;
   location?: string;
   days?: number;
