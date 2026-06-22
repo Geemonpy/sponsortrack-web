@@ -1,15 +1,14 @@
-// TEST price IDs — swap for live price IDs before going live
 export const PLANS = {
   "job-access": {
-    priceId: "price_1TiyNn4sPWjbAzORH6VM1GqG",
+    priceId: "price_1TlDxtGF5tgNc4Ilm2oooqG9",
     tier: "job_access",
   },
   "job-access-alerts": {
-    priceId: "price_1Tiz2x4sPWjbAzORwm4FTJ1T",
+    priceId: "price_1TlDyGGF5tgNc4IlUcLOFs0z",
     tier: "alerts",
   },
   annual: {
-    priceId: "price_1Tiz4M4sPWjbAzORXf4qqF3d",
+    priceId: "price_1TlDygGF5tgNc4IlOTC1MPNW",
     tier: "alerts",
   },
 } as const;
