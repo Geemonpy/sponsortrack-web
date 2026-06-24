@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       subscription_data: {
         metadata: { tier: planConfig.tier, userId: user.id },
       },
-      success_url: `${siteUrl}/jobs?checkout=success`,
+      success_url: `${siteUrl}/payment-success`,
       cancel_url: `${siteUrl}/pricing`,
     });
 
