@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
         metadata: { tier: planConfig.tier, userId: user.id },
       },
       success_url: `${siteUrl}/payment-success`,
-      cancel_url: `${siteUrl}/pricing`,
+      cancel_url: `${siteUrl}/payment-cancelled`,
     });
 
     return NextResponse.json({ url: session.url });
