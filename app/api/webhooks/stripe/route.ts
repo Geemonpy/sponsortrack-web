@@ -97,6 +97,22 @@ export async function POST(req: NextRequest) {
           .eq("stripe_subscription_id", sub.id);
         break;
       }
+
+      case "invoice.payment_failed": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const subRef = invoice.parent?.subscription_details?.subscription;
+        if (!subRef) break;
+        const subId = typeof subRef === "string" ? subRef : subRef.id;
+
+        await supabase
+          .from("subscriptions")
+          .update({
+            status: "past_due",
+            updated_at: new Date().toISOString(),
+          })
+          .eq("stripe_subscription_id", subId);
+        break;
+      }
     }
   } catch (err) {
     const msg = err instanceof Error ? err.message : "Handler error";
