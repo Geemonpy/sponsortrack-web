@@ -97,6 +97,28 @@ export default function JobCard({ job, back }: { job: Job; back?: string }) {
             {timeAgo(job.posted_date)}
           </span>
         </div>
+
+        {(job.source === "Adzuna" || job.source === null) && (
+          <div className="mt-1.5 flex items-center gap-1 min-w-[116px] min-h-[23px] text-[11px] text-v-muted">
+            <a
+              href="https://www.adzuna.co.uk"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline"
+            >
+              Jobs
+            </a>
+            <span>by</span>
+            <a
+              href="https://www.adzuna.co.uk"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Adzuna"
+            >
+              <img src="/adzuna-logo.jpg" alt="Adzuna" width={80} height={18} />
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Actions */}
