@@ -6,7 +6,7 @@ The `jobs` table has a `source` column. Sources are split into two tiers:
 
 **Main feed sources** (defined as `MAIN_SOURCES` in `lib/data.ts`):
 - `"Adzuna"`
-- `"Active Jobs DB"`
+- `"Fantastic Jobs"`
 
 A `null` source is also treated as main feed (it displays as "Adzuna" in the UI).
 

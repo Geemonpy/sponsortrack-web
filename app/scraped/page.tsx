@@ -32,7 +32,7 @@ export default async function ScrapedPage() {
         {jobs.length === 0 ? (
           <div className="text-center py-20 text-ink/50">
             <p className="font-display text-2xl text-ink/70">No test-source jobs found.</p>
-            <p className="mt-1">Jobs appear here when their source is not Adzuna or Active Jobs DB.</p>
+            <p className="mt-1">Jobs appear here when their source is not Adzuna or Fantastic Jobs.</p>
           </div>
         ) : (
           <div className="grid gap-3">

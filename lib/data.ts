@@ -2,7 +2,7 @@ import "server-only";
 import { supabase } from "./supabaseServer";
 import type { Job, JobFilters, Stats } from "./types";
 
-export const MAIN_SOURCES = ["Adzuna", "Active Jobs DB"] as const;
+export const MAIN_SOURCES = ["Adzuna", "Fantastic Jobs"] as const;
 
 export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
   try {
@@ -28,7 +28,7 @@ export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
     if (filters.sourceType === "main") {
       q = q.or(MAIN_SOURCE_OR);
     } else if (filters.sourceType === "test") {
-      q = q.not("source", "is", null).not("source", "in", '("Adzuna","Active Jobs DB")');
+      q = q.not("source", "is", null).not("source", "in", '("Adzuna","Fantastic Jobs")');
     }
 
     q = q.order("posted_date", { ascending: false }).limit(filters.limit ?? 200);
@@ -68,7 +68,7 @@ export async function getJob(id: string): Promise<Job | null> {
 }
 
 // Matches the sourceType:"main" filter in getJobs: source IS NULL or one of MAIN_SOURCES.
-const MAIN_SOURCE_OR = `source.is.null,source.eq.Adzuna,source.eq.Active Jobs DB`;
+const MAIN_SOURCE_OR = `source.is.null,source.eq.Adzuna,source.eq.Fantastic Jobs`;
 
 export async function getStats(): Promise<Stats> {
   const empty: Stats = { total: 0, sponsor_confirmed: 0, licensed_sponsor: 0, today: 0 };
