@@ -41,31 +41,27 @@ export default function JobCard({ job, back }: { job: Job; back?: string }) {
     ? `/jobs/${job.id}?back=${encodeURIComponent(back)}`
     : `/jobs/${job.id}`;
   return (
-    <article className="bg-white border border-v-line rounded-[18px] p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[0_14px_44px_rgba(28,20,64,.07)] hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(28,20,64,.13)] transition-all duration-200">
+    <article className="bg-white border border-v-line rounded-[18px] p-5 flex flex-col sm:flex-row sm:items-center gap-4 shadow-[0_14px_44px_rgba(28,20,64,.07)] hover:-translate-y-1 hover:shadow-[0_26px_70px_rgba(28,20,64,.13)] transition-all duration-200 overflow-hidden">
       <div className="flex-1 min-w-0">
         {/* Badge pill */}
-        <div className="mb-2.5">
+        <div className="mb-2.5 flex flex-wrap items-center gap-1.5">
           <span className={`inline-flex items-center gap-2 font-jakarta font-bold text-[11px] px-[11px] py-[5px] rounded-full ${b.pillCls}`}>
             <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${b.dotCls}`} />
             {b.label.toUpperCase()}
           </span>
-          {(job.is_skilled_worker_sponsor || job.meets_general_threshold === "meets" || job.meets_general_threshold === "below") && (
-            <span className="inline-flex flex-wrap gap-1.5 ml-1.5">
-              {job.is_skilled_worker_sponsor && (
-                <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-line text-v-muted">
-                  Skilled Worker sponsor
-                </span>
-              )}
-              {job.meets_general_threshold === "meets" && (
-                <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-green-soft text-v-green">
-                  Salary meets visa threshold
-                </span>
-              )}
-              {job.meets_general_threshold === "below" && (
-                <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-amber-soft text-v-amber">
-                  Salary below typical threshold
-                </span>
-              )}
+          {job.is_skilled_worker_sponsor && (
+            <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-line text-v-muted">
+              Skilled Worker sponsor
+            </span>
+          )}
+          {job.meets_general_threshold === "meets" && (
+            <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-green-soft text-v-green">
+              Salary meets visa threshold
+            </span>
+          )}
+          {job.meets_general_threshold === "below" && (
+            <span className="inline-flex items-center font-jakarta font-bold text-[10px] px-[9px] py-[4px] rounded-full bg-v-amber-soft text-v-amber">
+              Salary below typical threshold
             </span>
           )}
         </div>
