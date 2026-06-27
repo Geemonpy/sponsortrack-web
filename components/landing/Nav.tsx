@@ -49,7 +49,7 @@ export default function Nav() {
       <nav
         className={`fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-7 transition-all duration-300 ${
           scrolled
-            ? "py-3 bg-[rgba(251,250,254,0.85)] backdrop-blur-[14px] shadow-[0_1px_0_#ECEAF3]"
+            ? "py-3 bg-[rgba(251,250,254,1)] backdrop-blur-[14px] shadow-[0_1px_0_#ECEAF3]"
             : "py-[18px]"
         }`}
       >
