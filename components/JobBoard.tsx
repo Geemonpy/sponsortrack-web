@@ -437,37 +437,16 @@ export default function JobBoard({
               Get daily visa-sponsor job alerts
             </h2>
             <p className="mt-3 text-white/80">
-              New sponsor-verified roles in your inbox every morning. Free, no spam.
+              New sponsor-verified roles in your inbox every morning. A Pro feature.
             </p>
           </div>
-          <div className="relative min-w-0">
-            {/* Honeypot — hidden from humans, bots fill it in */}
-            <input
-              type="text"
-              name="website"
-              value={honeypot}
-              onChange={(e) => setHoneypot(e.target.value)}
-              style={{ display: "none" }}
-              tabIndex={-1}
-              aria-hidden="true"
-              autoComplete="off"
-            />
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="you@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="flex-1 rounded-xl px-4 py-3 text-v-ink placeholder:text-v-muted/60 bg-white border-0 outline-none font-medium"
-              />
-              <button
-                onClick={subscribe}
-                className="bg-white text-violet font-jakarta font-bold px-5 py-3 rounded-xl hover:bg-violet-tint active:scale-[0.96] transition-all shrink-0"
-              >
-                Subscribe
-              </button>
-            </div>
-            <p className="mt-2 text-[13px] text-white/80 h-5">{alertMsg}</p>
+          <div className="relative min-w-0 flex sm:justify-end">
+            <a
+              href="/alerts"
+              className="inline-flex items-center gap-2 bg-white text-violet font-jakarta font-bold px-6 py-3 rounded-xl hover:bg-violet-tint active:scale-[0.96] transition-all no-underline"
+            >
+              Set up job alerts →
+            </a>
           </div>
         </div>
       </section>
