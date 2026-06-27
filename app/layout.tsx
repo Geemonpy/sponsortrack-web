@@ -65,7 +65,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en-GB" className={`${display.variable} ${body.variable} ${jakarta.variable}`}>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased pb-24">
         {children}
         <Assistant />
       </body>
