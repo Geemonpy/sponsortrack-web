@@ -243,9 +243,9 @@ export default function JobBoard({
           </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          {/* Category tabs */}
-          <div className="flex gap-1.5 p-1 bg-v-line/60 rounded-full">
+        <div className="flex flex-col gap-3">
+          {/* Row 1: Category tabs */}
+          <div className="flex gap-1.5 p-1 bg-v-line/60 rounded-full w-fit overflow-x-auto">
             {CATS.map((c) => (
               <button
                 key={c.key}
@@ -253,7 +253,7 @@ export default function JobBoard({
                   if (c.key === category) return;
                   guardFilter(() => setCategory(c.key));
                 }}
-                className={`px-3.5 py-1.5 text-[13.5px] font-jakarta font-semibold rounded-full transition-all duration-200 ${
+                className={`px-3.5 py-1.5 text-[13px] font-semibold rounded-full whitespace-nowrap transition-all duration-200 ${
                   category === c.key
                     ? "bg-white shadow text-violet"
                     : "text-v-muted hover:text-v-ink"
@@ -264,81 +264,42 @@ export default function JobBoard({
             ))}
           </div>
 
-          <div className="flex-1" />
-
-          {/* Badge filter — only in verified mode */}
-          {viewMode === "verified" && (
-            <select
-              className={controlCls}
-              value={badge}
-              onChange={(e) => guardFilter(() => setBadge(e.target.value))}
-            >
-              <option value="">All sponsor-safe jobs</option>
-              <option value="licensed_sponsor">Licensed sponsor employer</option>
-              <option value="sponsorship_mentioned">Sponsorship mentioned</option>
+          {/* Row 2: Refine controls — dropdowns + checkboxes */}
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5">
+            {viewMode === "verified" && (
+              <select className={controlCls} value={badge} onChange={(e) => guardFilter(() => setBadge(e.target.value))}>
+                <option value="">All sponsor-safe jobs</option>
+                <option value="licensed_sponsor">Licensed sponsor</option>
+                <option value="sponsorship_mentioned">Sponsorship mentioned</option>
+              </select>
+            )}
+            <select className={controlCls} value={days} onChange={(e) => guardFilter(() => setDays(e.target.value))}>
+              <option value="">Any time</option>
+              <option value="1">Last 24 hours</option>
+              <option value="7">Last 7 days</option>
+              <option value="14">Last 14 days</option>
+              <option value="30">Last 30 days</option>
             </select>
-          )}
-
-          {/* Include unconfirmed — only in verified mode */}
-          {viewMode === "verified" && (
+            {viewMode === "verified" && (
+              <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
+                <input type="checkbox" checked={includeUnconfirmed} onChange={(e) => guardFilter(() => setIncludeUnconfirmed(e.target.checked))} className="rounded accent-violet" />
+                Include unconfirmed
+              </label>
+            )}
             <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={includeUnconfirmed}
-                onChange={(e) => guardFilter(() => setIncludeUnconfirmed(e.target.checked))}
-                className="rounded accent-violet"
-              />
-              Include unconfirmed
+              <input type="checkbox" checked={salaryThreshold} onChange={(e) => guardFilter(() => setSalaryThreshold(e.target.checked))} className="rounded accent-violet" />
+              Salary meets threshold
             </label>
-          )}
+          </div>
 
-          {/* Salary threshold */}
-          <label className="flex items-center gap-1.5 text-[13.5px] font-medium text-v-muted cursor-pointer select-none">
-            <input
-              type="checkbox"
-              checked={salaryThreshold}
-              onChange={(e) => guardFilter(() => setSalaryThreshold(e.target.checked))}
-              className="rounded accent-violet"
-            />
-            Salary meets threshold
-          </label>
-
-          {/* Days filter */}
-          <select
-            className={controlCls}
-            value={days}
-            onChange={(e) => guardFilter(() => setDays(e.target.value))}
-          >
-            <option value="">Any time</option>
-            <option value="1">Last 24 hours</option>
-            <option value="7">Last 7 days</option>
-            <option value="14">Last 14 days</option>
-            <option value="30">Last 30 days</option>
-          </select>
-
-          {/* Location */}
-          <input
-            className={`${controlCls} w-32 placeholder:text-v-muted/60`}
-            placeholder="Location…"
-            value={location}
-            onChange={(e) => guardFilter(() => setLocation(e.target.value))}
-          />
-
-          {/* Search */}
-          <input
-            className={`${controlCls} w-44 placeholder:text-v-muted/60`}
-            placeholder="Title or company…"
-            value={search}
-            onChange={(e) => guardFilter(() => setSearch(e.target.value))}
-          />
-
-          {/* Search button */}
-          <button
-            onClick={() => guardFilter(fetchJobs)}
-            className="bg-violet text-white font-jakarta font-bold text-[14px] px-4 py-2 rounded-xl hover:bg-[#4a34d4] active:scale-[0.96] transition-all whitespace-nowrap"
-          >
-            Search
-          </button>
+          {/* Row 3: Search inputs + button */}
+          <div className="flex flex-wrap items-center gap-2">
+            <input className={`${controlCls} flex-1 min-w-[140px]`} placeholder="Location…" value={location} onChange={(e) => guardFilter(() => setLocation(e.target.value))} />
+            <input className={`${controlCls} flex-1 min-w-[140px]`} placeholder="Title or company…" value={search} onChange={(e) => guardFilter(() => setSearch(e.target.value))} />
+            <button onClick={() => guardFilter(fetchJobs)} className="bg-violet text-white font-jakarta font-bold text-[14px] px-4 py-2 rounded-xl hover:bg-[#4a34d4] active:scale-[0.96] tap">
+              Search
+            </button>
+          </div>
         </div>
 
         <p className="mt-2 text-[12px] text-v-muted/60">
