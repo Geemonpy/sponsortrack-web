@@ -25,6 +25,11 @@ export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
       q = q.or(`title.ilike.%${filters.search}%,company.ilike.%${filters.search}%`);
     }
     if (filters.salaryThreshold) q = q.eq("meets_general_threshold", "meets");
+    if (filters.sourceType === "main") {
+      q = q.or(MAIN_SOURCE_OR);
+    } else if (filters.sourceType === "test") {
+      q = q.not("source", "is", null).not("source", "in", '("Adzuna","Active Jobs DB")');
+    }
 
     q = q.order("posted_date", { ascending: false }).limit(filters.limit ?? 200);
 
@@ -33,16 +38,7 @@ export async function getJobs(filters: JobFilters = {}): Promise<Job[]> {
       console.error("getJobs error:", error.message);
       return [];
     }
-    let result = (data ?? []) as Job[];
-    if (filters.sourceType === "main") {
-      result = result.filter(
-        (j) => j.source === null || (MAIN_SOURCES as readonly string[]).includes(j.source)
-      );
-    } else if (filters.sourceType === "test") {
-      result = result.filter(
-        (j) => j.source !== null && !(MAIN_SOURCES as readonly string[]).includes(j.source)
-      );
-    }
+    const result = (data ?? []) as Job[];
     return result;
   } catch (e) {
     console.error("getJobs failed:", e);
