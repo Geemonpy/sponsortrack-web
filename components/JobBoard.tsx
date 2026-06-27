@@ -184,7 +184,7 @@ export default function JobBoard({
   })();
 
   const controlCls =
-    "bg-white border border-v-line rounded-xl px-3.5 py-2 text-[14px] font-medium text-v-ink focus:outline-none focus:border-violet transition-colors";
+    "bg-white border border-v-line rounded-xl px-3.5 py-2 text-[16px] font-medium text-v-ink focus:outline-none focus:border-violet transition-colors";
 
   return (
     <>
