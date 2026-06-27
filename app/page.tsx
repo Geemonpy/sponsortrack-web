@@ -169,14 +169,14 @@ export default async function HomePage() {
               <span className="text-violet-2">✦</span> Verified licensed sponsors. Fewer wasted applications.
             </div>
             <h1
-              className="font-jakarta font-extrabold tracking-[-0.02em] leading-[1.05] text-[clamp(2.8rem,6.4vw,4.9rem)]"
+              className="font-jakarta font-bold tracking-[-0.02em] leading-[1.05] text-[clamp(2rem,6.4vw,4.9rem)]"
             >
               Find UK jobs<br />
               from employers<br />
               who can <span className="text-violet">sponsor</span><br />
               <span className="text-violet">your visa.</span>
             </h1>
-            <p className="text-v-muted text-[19px] max-w-[430px] mt-[26px] mb-[34px]">
+            <p className="text-v-muted text-[16px] sm:text-[19px] max-w-[430px] mt-[26px] mb-[34px]">
               Nurse, carer, developer or business grad — every listing is cross-checked against the official Home Office sponsor register before you ever apply.
             </p>
             <div className="flex items-center gap-[18px] flex-wrap">
