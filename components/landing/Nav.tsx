@@ -57,9 +57,9 @@ export default function Nav() {
         <Link
           href="/"
           onClick={() => setMobileOpen(false)}
-          className="flex items-center gap-2.5 font-jakarta font-extrabold text-[21px] text-v-ink no-underline"
+          className="flex items-center gap-2.5 font-jakarta font-extrabold text-[17px] sm:text-[21px] text-v-ink no-underline"
         >
-          <span className="w-[34px] h-[34px] rounded-[10px] bg-gradient-to-br from-violet to-violet-2 flex items-center justify-center text-white text-[18px] shadow-[0_6px_16px_rgba(91,67,232,0.4)]">
+          <span className="w-[28px] h-[28px] sm:w-[34px] sm:h-[34px] rounded-[10px] bg-gradient-to-br from-violet to-violet-2 flex items-center justify-center text-white text-[15px] sm:text-[18px] shadow-[0_6px_16px_rgba(91,67,232,0.4)]">
             S
           </span>
           Sponsor<span className="text-violet">Route</span>
