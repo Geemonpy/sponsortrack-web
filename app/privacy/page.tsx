@@ -45,8 +45,9 @@ export default function PrivacyPage() {
               .
             </p>
             <p>
-              SponsorRoute is operated by Geemon Palissery Yesudas (sole trader), 2 Scarbrook Road,
-              Croydon, CR0 1FN, United Kingdom. We are the data controller for your personal data.
+              SponsorRoute is operated by Geemon Palissery Yesudas, based in Croydon, London, UK. We
+              are registered with the Information Commissioner's Office (ICO), registration number
+              ZC178688, and are the data controller for your personal data.
             </p>
           </Section>
 

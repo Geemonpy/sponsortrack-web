@@ -39,8 +39,7 @@ export default function TermsPage() {
               by these Terms. If you do not agree, please do not use the Service.
             </p>
             <p>
-              SponsorRoute is operated by Geemon Palissery Yesudas (sole trader), 2 Scarbrook Road,
-              Croydon, CR0 1FN.
+              SponsorRoute is operated by Geemon Palissery Yesudas, based in Croydon, London, UK.
             </p>
           </Section>
 
