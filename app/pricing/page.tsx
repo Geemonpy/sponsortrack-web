@@ -214,6 +214,15 @@ export default function PricingPage() {
           </CheckoutButton>
         </div>
       </section>
+
+      {/* ── DISCLAIMER ── */}
+      <section className="max-w-5xl mx-auto px-5 pt-6 pb-10 border-t border-v-line">
+        <p className="text-[12.5px] text-v-muted/70 text-center leading-relaxed">
+          SponsorRoute does not guarantee sponsorship, employment, or visa approval, and is not an
+          immigration adviser or affiliated with the Home Office. Sponsorship confidence labels are
+          guidance only — always verify directly with the employer.
+        </p>
+      </section>
     </div>
   );
 }
