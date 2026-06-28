@@ -63,9 +63,6 @@ export default function JobBoard({
 
   const [salaryThreshold, setSalaryThreshold] = useState(false);
 
-  const [email, setEmail] = useState("");
-  const [alertMsg, setAlertMsg] = useState("");
-  const [honeypot, setHoneypot] = useState("");
 
   // null = unknown (before first fetch), false = subscriber, true = free/capped
   const [isCapped, setIsCapped] = useState<boolean | null>(null);
@@ -120,27 +117,6 @@ export default function JobBoard({
     const t = setTimeout(fetchJobs, 350);
     return () => clearTimeout(t);
   }, [fetchJobs]);
-
-  async function subscribe() {
-    if (honeypot) return;
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-      setAlertMsg("Please enter a valid email address.");
-      return;
-    }
-    setAlertMsg("…");
-    try {
-      const r = await fetch("/api/alerts", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      if (!r.ok) throw new Error();
-      setAlertMsg("✓ Subscribed. Fresh sponsor jobs every morning.");
-      setEmail("");
-    } catch {
-      setAlertMsg("Something went wrong — please try again.");
-    }
-  }
 
   function loadMore() {
     const next = page + 1;
