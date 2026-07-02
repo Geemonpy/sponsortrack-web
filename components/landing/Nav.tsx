@@ -29,11 +29,6 @@ export default function Nav() {
   // Close mobile menu when route changes
   useEffect(() => { setMobileOpen(false); }, []);
 
-  function openAssistant() {
-    setMobileOpen(false);
-    window.dispatchEvent(new CustomEvent("open-assistant"));
-  }
-
   async function signOut() {
     setMobileOpen(false);
     await supabaseBrowser.auth.signOut();
@@ -72,12 +67,6 @@ export default function Nav() {
           <Link href="/#verify" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Verification</Link>
           <Link href="/#calc" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Salary check</Link>
           <Link href="/pricing" className="text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors">Pricing</Link>
-          <button
-            onClick={openAssistant}
-            className="flex items-center gap-1.5 text-[15px] text-v-muted font-medium hover:text-v-ink transition-colors"
-          >
-            <span className="text-violet">✦</span> Ask AI
-          </button>
 
           {user ? (
             <div className="flex items-center gap-3">
@@ -169,9 +158,6 @@ export default function Nav() {
               <Link href="/#verify" onClick={() => setMobileOpen(false)} className={linkCls}>Verification</Link>
               <Link href="/#calc" onClick={() => setMobileOpen(false)} className={linkCls}>Salary check</Link>
               <Link href="/pricing" onClick={() => setMobileOpen(false)} className={linkCls}>Pricing</Link>
-              <button onClick={openAssistant} className={`${linkCls} w-full text-left flex items-center gap-2`}>
-                <span className="text-violet">✦</span> Ask AI
-              </button>
 
               <div className="border-t border-v-line my-3" />
 

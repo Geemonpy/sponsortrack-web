@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Fraunces, Hanken_Grotesk, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import Assistant from "@/components/Assistant";
 
 const display = Fraunces({
   subsets: ["latin"],
@@ -67,7 +66,6 @@ export default function RootLayout({
     <html lang="en-GB" className={`${display.variable} ${body.variable} ${jakarta.variable}`}>
       <body className="font-sans antialiased pb-24">
         {children}
-        <Assistant />
       </body>
     </html>
   );
